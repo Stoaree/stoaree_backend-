@@ -30,10 +30,6 @@ const storySchema = new mongoose.Schema(
       type: [ObjectId],
       required: true
     }
-  },
-  {
-    timestamps: true
-  }
-);
+  }, {timestamps: true});
 
 module.exports = mongoose.model("story", storySchema);
