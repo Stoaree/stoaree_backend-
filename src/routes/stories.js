@@ -7,7 +7,7 @@ app.get("/", function(req, res) {
   res.send("Here is where the list of stories will be");
 });
 
-app.get("/:id", async (req, res) => {
+app.get("/:id", function(req, res) {
   res.send("Here is where a specific story id show page will be found");
 });
 
