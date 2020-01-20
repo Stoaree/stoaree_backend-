@@ -14,3 +14,5 @@ app.get("/:id", function(req, res) {
 app.post("/", function(req, res) {
   res.send("Here is where a new posted story will be added to the list");
 });
+
+module.exports = router;
