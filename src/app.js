@@ -10,7 +10,8 @@ const storiesRouter = require('./routes/stories');
 const searchRouter = require('./routes/search.js');
 const signupRouter = require('./routes/signup.js');
 const loginRouter = require('./routes/login.js');
-
+const questionsRouter = require('./routes/questions');
+const commentsRouter = require('./routes/comments');
 
 const app = express();
 
@@ -23,6 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/stories', storiesRouter);
+app.use('/questions', questionsRouter);
+app.use('/comments', commentsRouter);
 app.use('/search', searchRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
