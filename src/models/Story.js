@@ -10,6 +10,14 @@ const storySchema = new mongoose.Schema(
       type: String,
       required: false
     },
+    interviewer: {
+      type: ObjectId,
+      required: true
+    },
+    interviewee: {
+      type: ObjectId,
+      required: false
+    },
     tags: {
       type: [String],
       required: true
