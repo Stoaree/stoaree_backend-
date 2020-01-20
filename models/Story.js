@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { questionSchema } = require("./Question");
 
 const storySchema = new mongoose.Schema(
   {
