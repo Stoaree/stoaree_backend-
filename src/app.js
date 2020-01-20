@@ -17,6 +17,7 @@ const commentsRouter = require('./routes/comments');
 const mongoose = require('mongoose');
 const mongoURIDevelopment = 'mongodb://localhost/stoareeDatabase';
 const mongodbURI = process.env.DB_URI
+require('dotenv').config();
 
 const app = express();
 
