@@ -13,6 +13,11 @@ const loginRouter = require('./routes/login.js');
 const questionsRouter = require('./routes/questions');
 const commentsRouter = require('./routes/comments');
 
+// Database
+const mongoose = require('mongoose');
+const mongoURIDevelopment = 'mongodb://localhost/stoareeDatabase';
+const mongodbURI = process.env.DB_URI
+
 const app = express();
 
 app.use(logger('dev'));
@@ -30,6 +35,14 @@ app.use('/search', searchRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 
+console.log(mongodbURI);
+mongoose.connect(mongodbURI, {useNewUrlParser: true}, (err) => {
+  if (err) {
+    console.log(`Error connecting to database: ${err}`)
+  } else {
+    console.log('Connected to database :)')
+  }
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
