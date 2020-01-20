@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/search', function (res, req) {
+router.post('/', function (res, req) {
   return res.send('Search request has been sent!')
 });
 
-router.get('/search', function (res, req) {
+router.get('/', function (res, req) {
   return res.send('search page');
 });
 
+module.exports = router;

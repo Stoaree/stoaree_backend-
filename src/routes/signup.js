@@ -9,4 +9,5 @@ router.post('/signup', function (req, res) {
   res.send('You have posted to the sign up page')
 });
 
+module.exports = router;
 
