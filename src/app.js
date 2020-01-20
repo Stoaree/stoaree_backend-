@@ -1,16 +1,19 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var storiesRouter = require('./routes/stories');
-var questionsRouter = require('./routes/questions');
-var commentsRouter = require('./routes/comments');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const storiesRouter = require('./routes/stories');
+const searchRouter = require('./routes/search.js');
+const signupRouter = require('./routes/signup.js');
+const loginRouter = require('./routes/login.js');
+const questionsRouter = require('./routes/questions');
+const commentsRouter = require('./routes/comments');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -23,6 +26,10 @@ app.use('/users', usersRouter);
 app.use('/stories', storiesRouter);
 app.use('/questions', questionsRouter);
 app.use('/comments', commentsRouter);
+app.use('/search', searchRouter);
+app.use('/signup', signupRouter);
+app.use('/login', loginRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
