@@ -1,8 +1,31 @@
 const mongoose = require("mongoose");
+const { questionSchema } = require("./Question");
 
 const storySchema = new mongoose.Schema(
   {
-
+    title: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: false
+    },
+    tags: {
+      type: [String],
+      required: true
+    },
+    comments: {
+      type: [ObjectId],
+      required: true
+    },
+    questions: {
+      type: [ObjectId],
+      required: true
+    }
+  },
+  {
+    timestamps: true
   }
 );
 
