@@ -34,7 +34,7 @@ router.post("/:story_id", async (req, res) => {
   catch (err) { sendError(res, err); }
 });
 
-router.put("/:story_id/:comment_id", (req, res) => {
+router.put("/:story_id/:comment_id", async (req, res) => {
   // res.send("This will edit a comment");
   const { story_id, comment_id } = req.params;
   const { text } = req.body;

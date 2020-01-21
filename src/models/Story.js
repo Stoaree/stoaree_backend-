@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema.Types;
 
 const storySchema = new mongoose.Schema(
   {
@@ -12,10 +13,12 @@ const storySchema = new mongoose.Schema(
     },
     interviewer: {
       type: ObjectId,
+      ref: "user",
       required: true
     },
     interviewee: {
       type: ObjectId,
+      ref: "user",
       required: false
     },
     tags: {
@@ -30,6 +33,6 @@ const storySchema = new mongoose.Schema(
       type: [ObjectId],
       required: true
     }
-  }, {timestamps: true});
+  }, { timestamps: true });
 
 module.exports = mongoose.model("story", storySchema);

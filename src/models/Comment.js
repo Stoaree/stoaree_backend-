@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
@@ -13,4 +13,4 @@ const commentSchema = new Schema({
   }
 }, { timestamps: true });
 
-export const CommentModel = mongoose.model("Comment", commentSchema);
+module.exports = mongoose.model("comment", commentSchema);

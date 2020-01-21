@@ -8,7 +8,7 @@ function sendError(res, err) {
   res.status(400).send('Error: ' + err);
 }
 
-router.get("/:story_id", (req, res) => {
+router.get("/:story_id", async (req, res) => {
   // res.send("This will get the list of questions for a story");
   try {
     const story = await Story.findById(req.params.story_id);
@@ -17,7 +17,7 @@ router.get("/:story_id", (req, res) => {
   catch (err) { sendError(res, err); }
 });
 
-router.post("/:story_id", (req, res) => {
+router.post("/:story_id", async (req, res) => {
   // res.send("This will add a new question and response to a story");
   const { title, audioFileURL } = req.body;
 
@@ -36,7 +36,7 @@ router.post("/:story_id", (req, res) => {
   catch (err) { sendError(res, err); }
 });
 
-router.put("/:story_id/:question_id", (req, res) => {
+router.put("/:story_id/:question_id", async (req, res) => {
   // res.send("This will update a question with a new response");
   const { audioFileURL } = req.body;
   const { story_id, question_id } = req.params;
@@ -55,7 +55,7 @@ router.put("/:story_id/:question_id", (req, res) => {
   catch (err) { sendError(res, err); }
 });
 
-router.delete("/:story_id/:question_id", (req, res) => {
+router.delete("/:story_id/:question_id", async (req, res) => {
   // res.send("This will delete a response to a question");
   const { story_id, question_id } = req.params;
 

@@ -10,8 +10,4 @@ router.post('/', async function (req, res) {
   res.json(foundStories);
 });
 
-router.get('/', function (req, res) {
-  res.send('search page');
-});
-
 module.exports = router;
