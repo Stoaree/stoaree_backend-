@@ -73,7 +73,7 @@ app.post("/sign_s3", (req, res) => {
 
 mongoose.connect(
   mongodbURI,
-  { dbName: "stoareeTest", useNewUrlParser: true, useUnifiedTopology: true },
+  { dbName: process.env.DB_NAME, useNewUrlParser: true, useUnifiedTopology: true },
   err => {
     if (err) {
       console.log(`Error connecting to database: ${err}`);
