@@ -17,7 +17,6 @@ const commentsRouter = require('./routes/comments');
 const mongoose = require('mongoose');
 const mongoURIDevelopment = 'mongodb://localhost/stoareeDatabase';
 const mongodbURI = process.env.DB_URI
-require('dotenv').config();
 
 const app = express();
 
@@ -36,7 +35,7 @@ app.use('/search', searchRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 
-mongoose.connect(mongoURIDevelopment, { useNewUrlParser: true, useUnifiedTopology: true}, (err) => {
+mongoose.connect(mongodbURI, { useNewUrlParser: true, useUnifiedTopology: true}, (err) => {
   if (err) {
     console.log(`Error connecting to database: ${err}`)
   } else {
