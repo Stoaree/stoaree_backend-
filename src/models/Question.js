@@ -7,7 +7,7 @@ const questionSchema = new mongoose.Schema(
       required: true
     },
 
-    audioFiles: {
+    audioFileURL: {
       type: String,
       required: false
     }

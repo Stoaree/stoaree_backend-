@@ -4,13 +4,17 @@ const router = express.Router();
 const Comment = require("../models/Comment");
 const Story = require("../models/Story");
 
+function sendError(res, err) {
+  res.status(400).send('Error: ' + err);
+}
+
 router.get("/:story_id", async (req, res) => {
   // res.send("This will get the comments for a particular story");
   try {
     const story = await Story.findById(req.params.story_id);
     res.json(story.comments);
   }
-  catch (err) { res.status(400).send('Error: ' + err); }
+  catch (err) { sendError(res, err); }
 });
 
 router.post("/:story_id", async (req, res) => {
@@ -24,27 +28,27 @@ router.post("/:story_id", async (req, res) => {
   try {
     const savedComment = await newComment.save();
     const story = await Story.findById(req.params.story_id);
-    story.comment.push(savedComment);
+    story.comment.push(savedComment._id);
     story.save();
   }
-  catch (err) { res.status(400).send('Error: ' + err); }
+  catch (err) { sendError(res, err); }
 });
 
 router.put("/:story_id/:comment_id", (req, res) => {
   // res.send("This will edit a comment");
   const { story_id, comment_id } = req.params;
-  const { comment } = req.body;
+  const { text } = req.body;
 
   try {
     const story = Story.findById(story_id);
     if (story.comments.includes(comment_id)) {
-      const commentObj = Comment.findById(comment_id);
-      commentObj.comment = comment;
-      await commentObj.send();
-      res.json(commentObj);
+      const comment = Comment.findById(comment_id);
+      comment.text = text;
+      await comment.send();
+      res.json(comment);
     }
   }
-  catch (err) { res.status(400).send('Error: ' + err); }
+  catch (err) { sendError(res, err); }
 });
 
 router.delete("/:story_id/:comment_id", async (req, res) => {
@@ -62,7 +66,7 @@ router.delete("/:story_id/:comment_id", async (req, res) => {
       res.json(story.comments);
     }
   }
-  catch (err) { res.status(400).send('Error: ' + err); }
+  catch (err) { sendError(res, err); }
 });
 
 module.exports = router;
