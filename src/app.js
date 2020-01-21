@@ -36,7 +36,7 @@ app.use('/search', searchRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 
-mongoose.connect(mongodbURI, { useNewUrlParser: true, useUnifiedTopology: true}, (err) => {
+mongoose.connect(mongodbURI, { dbName: "", useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
   if (err) {
     console.log(`Error connecting to database: ${err}`)
   } else {
