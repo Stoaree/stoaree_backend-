@@ -19,17 +19,18 @@ router.get("/:story_id", async (req, res) => {
 
 router.post("/:story_id", async (req, res) => {
   // res.send("This will add a new comment to a story");
-  const { user, comment } = req.body; // get user from auth token instead?
+  const { user, text } = req.body; // get user from auth token instead?
   const newComment = new Comment({
     user,
-    comment
+    text
   });
 
   try {
     const savedComment = await newComment.save();
     const story = await Story.findById(req.params.story_id);
-    story.comment.push(savedComment._id);
+    story.comments.push(savedComment._id);
     story.save();
+    res.json(savedComment);
   }
   catch (err) { sendError(res, err); }
 });
