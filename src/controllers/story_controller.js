@@ -4,8 +4,10 @@ const { sendError, getStoryStuff } = require("./functions");
 async function getStories(req, res) {
   // return list of stories
   try {
-    const stories = await Story.find();
-    res.json(stories);
+    let stories = await Story.find();
+    stories = stories.map(story => getStoryStuff(story));
+    const storiesForDisplay = await Promise.all(stories);
+    res.json(storiesForDisplay);
   }
   catch (err) { sendError(res, err); }
 }
