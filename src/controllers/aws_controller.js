@@ -15,7 +15,7 @@ function auths3(req, res) {
   const s3Params = {
     Bucket: S3_BUCKET,
     Key: fileName,
-    Expires: 500,
+    // Expires: 500,
     ContentType: fileType
     // ACL: "public-read"
   }; // Make a request to the S3 API to get a signed URL which we can use to upload our file
