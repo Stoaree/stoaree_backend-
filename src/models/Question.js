@@ -7,11 +7,11 @@ const questionSchema = new mongoose.Schema(
       required: true
     },
 
-    audioFiles: {
+    audioFileURL: {
       type: String,
       required: false
     }
   }
 );
 
-module.exports = mongoose.model("user", questionSchema);
+module.exports = mongoose.model("question", questionSchema);

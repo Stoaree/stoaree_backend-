@@ -1,14 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-// Signup page
-router.get('/', function (req, res) {
-  res.send('This is the signup page')
-});
+const { createUser } = require("../controllers/user_controller");
 
-router.post('/', function (req, res) {
-  res.send('You have posted to the sign up page')
-});
+router.post('/', createUser);
 
 module.exports = router;
-
