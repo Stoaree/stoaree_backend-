@@ -29,9 +29,7 @@ async function register(req, res) {
 
 async function getUserProfile(req, res) {
   // get user profile data
-  const { id } = req.params;
-
-  const user = await User.findById(id);
+  const user = await User.findById(req.params.id);
   const { firstName, lastName, displayName, location, avatarURL } = user;
   const stories = await Story.find({ interviewer: id });
 
@@ -48,4 +46,19 @@ async function getUserProfile(req, res) {
   res.json(userDisplayData);
 }
 
-module.exports = { register, getUserProfile };
+async function updateProfile(req, res) {
+  const user = await User.findById(req.params.id);
+  const { firstName, lastName, displayName, location, avatarURL } = req.body;
+  user.firstName = firstName;
+  user.lastName = lastName;
+  user.displayName = displayName;
+  user.location = location;
+  user.avatarURL = avatarURL;
+  try {
+    await user.save();
+    res.json(user);
+  }
+  catch (err) { sendError(res, err); }
+}
+
+module.exports = { register, getUserProfile, updateProfile };

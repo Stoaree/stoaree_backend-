@@ -38,7 +38,7 @@ async function editComment(req, res) {
     if (story.comments.includes(comment_id)) {
       const comment = Comment.findById(comment_id);
       comment.text = text;
-      await comment.send();
+      await comment.save();
       res.json(comment);
     }
   }

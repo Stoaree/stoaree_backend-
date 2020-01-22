@@ -43,4 +43,27 @@ async function createStory(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-module.exports = { getStories, getStory, createStory };
+async function editStory(req, res) {
+  const { title, description, tags } = req.body;
+  const story = await Story.findById(req.params.id);
+  story.title = title;
+  story.description = description;
+  story.tags = tags;
+
+  try {
+    await story.save();
+    res.json(story);
+  }
+  catch (err) { sendError(res, err); }
+}
+
+async function deleteStory(req, res) {
+  try {
+    const story = await Story.findById(req.params.id);
+    await story.remove();
+    res.status(200).end();
+  }
+  catch (err) { sendError(res, err); }
+}
+
+module.exports = { getStories, getStory, createStory, editStory, deleteStory };
