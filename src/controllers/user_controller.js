@@ -1,17 +1,19 @@
+const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Story = require("../models/Story");
 const { sendError } = require("../controllers/functions");
 
-async function createUser(req, res) {
+async function registerUser(req, res) {
   // create new user
-  const { email, firstName, lastName, password, displayName, dateOfBirth, location, avatarURL } = req.body;
+  const { email, password, firstName, lastName, displayName, dateOfBirth, location, avatarURL } = req.body;
 
-  // TODO: make sure to hash password before saving
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const user = new User({
     email,
     firstName,
     lastName,
-    password,
+    password: hashedPassword,
     displayName,
     dateOfBirth,
     location,
@@ -46,4 +48,4 @@ async function getUserProfile(req, res) {
   res.json(userDisplayData);
 }
 
-module.exports = { createUser, getUserProfile };
+module.exports = { registerUser, getUserProfile };
