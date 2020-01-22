@@ -3,7 +3,7 @@ const User = require("../models/User");
 const Story = require("../models/Story");
 const { sendError } = require("../controllers/functions");
 
-async function registerUser(req, res) {
+async function register(req, res) {
   // create new user
   const { email, password, firstName, lastName, displayName, dateOfBirth, location, avatarURL } = req.body;
 
@@ -48,4 +48,4 @@ async function getUserProfile(req, res) {
   res.json(userDisplayData);
 }
 
-module.exports = { registerUser, getUserProfile };
+module.exports = { register, getUserProfile };
