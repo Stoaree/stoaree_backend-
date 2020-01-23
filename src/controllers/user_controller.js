@@ -29,7 +29,8 @@ async function register(req, res) {
 
 async function getUserProfile(req, res) {
   // get user profile data
-  const user = await User.findById(req.params.id);
+  const { id } = req.params;
+  const user = await User.findById(id);
   const { firstName, lastName, displayName, location, avatarURL } = user;
   const stories = await Story.find({ interviewer: id });
 

@@ -15,7 +15,7 @@ async function getStories(req, res) {
 async function getStory(req, res) {
   // return one story by id
   try {
-    let story = await Story.findById(req.params.id);
+    let story = await Story.findById(req.params.story_id);
     story = await getStoryStuff(story);
     res.json(story);
   }
@@ -28,7 +28,7 @@ async function createStory(req, res) {
   const newStory = new Story({
     title,
     description,
-    interviewer,
+    interviewer: req.user._id,
     interviewee,
     tags,
     comments: [],
@@ -45,7 +45,7 @@ async function createStory(req, res) {
 
 async function editStory(req, res) {
   const { title, description, tags } = req.body;
-  const story = await Story.findById(req.params.id);
+  const story = await Story.findById(req.params.story_id);
   story.title = title;
   story.description = description;
   story.tags = tags;
@@ -59,7 +59,7 @@ async function editStory(req, res) {
 
 async function deleteStory(req, res) {
   try {
-    const story = await Story.findById(req.params.id);
+    const story = await Story.findById(req.params.story_id);
     await story.remove();
     res.status(200).end();
   }

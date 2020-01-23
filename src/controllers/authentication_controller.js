@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 const User = require("../models/User");
+const Story = require("../models/Story");
+const Comment = require("../models/Comment");
 
 let checkToken = (req, res, next) => {
   // Express headers are auto converted to lowercase
@@ -83,4 +85,58 @@ async function login(req, res) {
   }
 }
 
-module.exports = { checkToken, login };
+async function checkPermissions(req, res, next) {
+  let allowedUserId;
+
+  if (req.params.comment_id) {
+    const comment = await Comment.findById(req.params.comment_id);
+    allowedUserId = comment.user;
+  }
+  else if (req.params.story_id) {
+    const story = await Story.findById(req.params.story_id);
+    allowedUserId = story.interviewer;
+  }
+
+  const allowedUser = await User.findById(allowedUserId);
+  if (req.user.email === allowedUser.email) {
+    next();
+  }
+  else {
+    res.status(403).end();
+  }
+}
+
+// async function checkPermissions(modelName) {
+//   let allowedUserId;
+
+//   switch (modelName) {
+//     case "story":
+//       const story = await Story.findById(req.params.id);
+//       allowedUserId = story.interviewer;
+//       break;
+//     case "comment":
+//       const comment = await Comment.findById(req.params.comment_id);
+//       allowedUserId = comment.user;
+//       break;
+//     default:
+//       break;
+//   }
+
+//   return async function (req, res, next) {
+//     const allowedUser = await User.findById(allowedUserId);
+//     if (user.decoded.email === allowedUser.email) {
+//       next();
+//     }
+//     else {
+//       res.status(403).end();
+//     }
+//   }
+// }
+
+async function getUser(req, res, next) {
+  const user = await User.findOne({ email: req.decoded.email });
+  req.user = user;
+  next();
+}
+
+module.exports = { checkToken, login, checkPermissions, getUser };
