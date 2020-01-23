@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { checkToken } = require("../controllers/authentication_controller");
+const { checkToken, getUser, checkPermissions } = require("../controllers/authentication_controller");
 
 const { getUserProfile, updateProfile } = require("../controllers/user_controller");
 
-router.get("/:id", getUserProfile);
-router.put("/:id", checkToken, updateProfile);
+router.get("/:user_id", getUserProfile);
+router.put("/:user_id", checkToken, getUser, checkPermissions, updateProfile);
 
 module.exports = router;

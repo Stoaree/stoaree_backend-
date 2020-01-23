@@ -96,6 +96,9 @@ async function checkPermissions(req, res, next) {
     const story = await Story.findById(req.params.story_id);
     allowedUserId = story.interviewer;
   }
+  else if (req.params.user_id) {
+    allowedUserId = req.params.user_id;
+  }
 
   const allowedUser = await User.findById(allowedUserId);
   if (req.user.email === allowedUser.email) {
