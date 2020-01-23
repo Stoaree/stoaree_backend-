@@ -32,6 +32,10 @@ const storySchema = new mongoose.Schema(
     questions: {
       type: [ObjectId],
       required: true
+    },
+    imageURL: {
+      type: String,
+      required: false
     }
   }, { timestamps: true });
 
