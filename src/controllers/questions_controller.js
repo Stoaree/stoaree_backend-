@@ -19,10 +19,7 @@ async function getSubQuestions(questionArray) {
 
       return question;
     });
-    let newArray = await Promise.all(array);
-    console.log(newArray);
-
-    return newArray;
+    return array;
   }
 }
 
@@ -30,14 +27,7 @@ async function getMasterQuestions(req, res) {
   // get list of template questions
   let questions = await Question.find({ $and: [{ isMaster: true }, { isTopLevel: true }] }).sort({ order: 1 });
 
-  questions = await questions.map(async (question) => {
-    const array = await getSubQuestions(question.subQuestions);
-    const newArray = await Promise.all(array);
-    let newQuestion = JSON.parse(JSON.stringify(question));
-    newQuestion.subQuestions = newArray;
-    return newQuestion;
-  });
-
+  questions = await getSubQuestions(questions);
   const array = await Promise.all(questions);
 
   res.json(array);
