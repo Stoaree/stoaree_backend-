@@ -27,7 +27,7 @@ const questionSchema = new mongoose.Schema(
       type: String,
       required: false
     },
-    isTemplate: {
+    isMaster: {
       type: Boolean,
       required: false
     }

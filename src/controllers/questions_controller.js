@@ -5,13 +5,13 @@ const { sendError } = require("./functions");
 
 // admin functions
 
-async function getTemplateQuestions(req, res) {
+async function getMasterQuestions(req, res) {
   // get list of template questions
-  const questions = await Question.find({ isTemplate: true });
+  const questions = await Question.find({ isMaster: true });
   res.json(questions);
 }
 
-async function addQuestion(req, res) {
+async function addMasterQuestion(req, res) {
   // add new question and response to a story
   const { title, order, isTopLevel, isYesOrNo, parentQuestionId } = req.body;
   const question = new Question({
@@ -19,7 +19,7 @@ async function addQuestion(req, res) {
     order,
     isTopLevel,
     isYesOrNo,
-    isTemplate: true
+    isMaster: true
   });
 
   try {
@@ -30,6 +30,36 @@ async function addQuestion(req, res) {
       await parentQuestion.save();
     }
     res.json(savedQuestion);
+  }
+  catch (err) { sendError(res, err); }
+}
+
+async function editMasterQuestion(req, res) {
+  const { title, order, isTopLevel, isYesOrNo } = req.body;
+  let question = await Question.findById(req.params.question_id);
+  question.title = title;
+  question.order = order;
+  question.isTopLevel = isTopLevel;
+  question.isYesOrNo = isYesOrNo;
+
+  try {
+    await question.save();
+    res.json(question);
+  }
+  catch (err) { sendError(res, err); }
+}
+
+async function deleteMasterQuestion(req, res) {
+  const { question_id } = req.params;
+  let question = await Question.findById(question_id);
+
+  try {
+    question.remove();
+    let parentQuestion = await Question.findOne({ subQuestions: question_id });
+    const index = parentQuestion.subQuestions.indexOf(question_id);
+    parentQuestion.subQuestions.splice(index, 1);
+    await parentQuestion.save();
+    res.status(200).end();
   }
   catch (err) { sendError(res, err); }
 }
@@ -64,22 +94,4 @@ async function answerQuestion(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-async function deleteQuestion(req, res) {
-  // deletes a question and its response
-  const { story_id, question_id } = req.params;
-
-  try {
-    const story = Story.findById(story_id);
-    if (story.questions.includes(question_id)) {
-      const question = Question.findById(question_id);
-      await question.remove();
-      const index = story.questions.indexOf(question_id);
-      story.questions.splice(index, 1);
-      await story.save();
-      res.json(story.questions);
-    }
-  }
-  catch (err) { sendError(res, err); }
-}
-
-module.exports = { getTemplateQuestions, getQuestions, addQuestion, answerQuestion, deleteQuestion };
+module.exports = { getMasterQuestions, addMasterQuestion, editMasterQuestion, deleteMasterQuestion, getQuestions, answerQuestion };
