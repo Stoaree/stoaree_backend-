@@ -1,13 +1,16 @@
 var express = require('express');
 var router = express.Router();
-const { checkToken, getCurrentUser, checkPermissions } = require("../controllers/authentication_controller");
-const { getQuestions, addQuestion, answerQuestion, deleteQuestion } = require("../controllers/questions_controller");
+const { checkToken, checkPermissions, isAdmin } = require("../controllers/authentication_controller");
+const { getTemplateQuestions, getQuestions, addQuestion, answerQuestion, deleteQuestion } = require("../controllers/questions_controller");
 
-// TODO: revise these later when we clarify how questions will be retrieved and answered
+// for admins
+router.get("/admin", checkToken, getTemplateQuestions);
+router.post("/admin", checkToken, addQuestion);
+// router.put("/admin/:question_id", checkToken, isAdmin, editQuestion);
+router.delete("/admin/:question_id", checkToken, isAdmin, deleteQuestion);
 
-router.get("/:story_id", getQuestions);
-router.post("/:story_id", checkToken, getCurrentUser, addQuestion);
-router.put("/:story_id/:question_id", checkToken, getCurrentUser, checkPermissions, answerQuestion);
-router.delete("/:story_id/:question_id", checkToken, getCurrentUser, checkPermissions, deleteQuestion);
+// for users
+router.get("/admin", checkToken, checkPermissions, getQuestions);
+router.put("/:story_id/:question_id", checkToken, checkPermissions, answerQuestion);
 
 module.exports = router;

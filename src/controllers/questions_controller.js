@@ -3,32 +3,44 @@ const Question = require("../models/Question");
 
 const { sendError } = require("./functions");
 
-// TODO: revise these later when we clarify how questions will be retrieved and answered
+// admin functions
 
-async function getQuestions(req, res) {
-  // get list of questions for a story
-  try {
-    const story = await Story.findById(req.params.story_id);
-    res.json(story.questions);
-  }
-  catch (err) { sendError(res, err); }
+async function getTemplateQuestions(req, res) {
+  // get list of template questions
+  const questions = await Question.find({ isTemplate: true });
+  res.json(questions);
 }
 
 async function addQuestion(req, res) {
   // add new question and response to a story
-  const { title, audioFileURL } = req.body;
+  const { title, order, isTopLevel, isYesOrNo, parentQuestionId } = req.body;
+  const question = new Question({
+    title,
+    order,
+    isTopLevel,
+    isYesOrNo,
+    isTemplate: true
+  });
 
   try {
-    const story = await Story.findById(req.params.story_id);
-    const question = new Question({
-      title,
-      audioFileURL
-    });
-
     const savedQuestion = await question.save();
-    story.questions.push(savedQuestion._id);
-    await story.save();
+    if (parentQuestionId) {
+      const parentQuestion = await Question.findById(parentQuestionId);
+      parentQuestion.subQuestions.push(savedQuestion._id);
+      await parentQuestion.save();
+    }
     res.json(savedQuestion);
+  }
+  catch (err) { sendError(res, err); }
+}
+
+// user functions
+
+async function getQuestions(req, res) {
+  // get list of all questions
+  try {
+    const story = await Story.findById(req.params.story_id);
+    res.json(story.questions);
   }
   catch (err) { sendError(res, err); }
 }
@@ -70,4 +82,4 @@ async function deleteQuestion(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-module.exports = { getQuestions, addQuestion, answerQuestion, deleteQuestion };
+module.exports = { getTemplateQuestions, getQuestions, addQuestion, answerQuestion, deleteQuestion };

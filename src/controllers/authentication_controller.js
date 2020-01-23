@@ -6,6 +6,11 @@ const User = require("../models/User");
 const Story = require("../models/Story");
 const Comment = require("../models/Comment");
 
+async function getUser(email) {
+  const user = await User.findOne({ email });
+  return user;
+}
+
 let checkToken = (req, res, next) => {
   // Express headers are auto converted to lowercase
   let token = req.headers['x-access-token'] ||
@@ -28,8 +33,10 @@ let checkToken = (req, res, next) => {
           });
       }
       else {
-        req.decoded = decoded;
-        next();
+        getUser(decoded.email).then(user => {
+          req.user = user;
+          next();
+        });
       }
     });
   }
@@ -109,10 +116,13 @@ async function checkPermissions(req, res, next) {
   }
 }
 
-async function getCurrentUser(req, res, next) {
-  const user = await User.findOne({ email: req.decoded.email });
-  req.user = user;
-  next();
+async function isAdmin(req, res, next) {
+  if (req.user.isAdmin) {
+    next();
+  }
+  else {
+    res.status(403).end();
+  }
 }
 
-module.exports = { checkToken, login, checkPermissions, getCurrentUser };
+module.exports = { checkToken, login, checkPermissions, isAdmin };
