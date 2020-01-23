@@ -7,6 +7,6 @@ router.get("/", getStories);
 router.get("/:story_id", getStory);
 router.post("/", checkToken, getUser, createStory);
 router.put("/:story_id", checkToken, getUser, checkPermissions, editStory);
-router.delete("/:story_id", checkToken, deleteStory);
+router.delete("/:story_id", checkToken, getUser, checkPermissions, deleteStory);
 
 module.exports = router;

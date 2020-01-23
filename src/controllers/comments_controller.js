@@ -13,17 +13,16 @@ async function getComments(req, res) {
 
 async function addComment(req, res) {
   // add a comment
-  const { user, text } = req.body; // get user from auth token instead?
   const newComment = new Comment({
-    user,
-    text
+    user: req.user._id,
+    text: req.body.text
   });
 
   try {
     const savedComment = await newComment.save();
     const story = await Story.findById(req.params.story_id);
     story.comments.push(savedComment._id);
-    story.save();
+    await story.save();
     res.json(savedComment);
   }
   catch (err) { sendError(res, err); }
@@ -34,9 +33,9 @@ async function editComment(req, res) {
   const { text } = req.body;
 
   try {
-    const story = Story.findById(story_id);
+    const story = await Story.findById(story_id);
     if (story.comments.includes(comment_id)) {
-      const comment = Comment.findById(comment_id);
+      const comment = await Comment.findById(comment_id);
       comment.text = text;
       await comment.save();
       res.json(comment);
@@ -49,9 +48,9 @@ async function deleteComment(req, res) {
   const { story_id, comment_id } = req.params;
 
   try {
-    const story = Story.findById(story_id);
+    const story = await Story.findById(story_id);
     if (story.comments.includes(comment_id)) {
-      const comment = Comment.findById(comment_id);
+      const comment = await Comment.findById(comment_id);
       await comment.remove();
       const index = story.comments.indexOf(comment_id);
       story.comments.splice(index, 1);
