@@ -5,10 +5,42 @@ const { sendError } = require("./functions");
 
 // admin functions
 
+async function getSubQuestions(questionArray) {
+  if (questionArray) {
+    let array = await questionArray.map(async (questionId) => {
+      let question = await Question.findById(questionId);
+
+      if (question.subQuestions) {
+        const subQuestions = await getSubQuestions(question.subQuestions);
+        const newSubQuestions = await Promise.all(subQuestions);
+        question = JSON.parse(JSON.stringify(question));
+        question.subQuestions = newSubQuestions;
+      }
+
+      return question;
+    });
+    let newArray = await Promise.all(array);
+    console.log(newArray);
+
+    return newArray;
+  }
+}
+
 async function getMasterQuestions(req, res) {
   // get list of template questions
-  const questions = await Question.find({ isMaster: true });
-  res.json(questions);
+  let questions = await Question.find({ $and: [{ isMaster: true }, { isTopLevel: true }] }).sort({ order: 1 });
+
+  questions = await questions.map(async (question) => {
+    const array = await getSubQuestions(question.subQuestions);
+    const newArray = await Promise.all(array);
+    let newQuestion = JSON.parse(JSON.stringify(question));
+    newQuestion.subQuestions = newArray;
+    return newQuestion;
+  });
+
+  const array = await Promise.all(questions);
+
+  res.json(array);
 }
 
 async function addMasterQuestion(req, res) {
@@ -25,8 +57,14 @@ async function addMasterQuestion(req, res) {
   try {
     const savedQuestion = await question.save();
     if (parentQuestionId) {
-      const parentQuestion = await Question.findById(parentQuestionId);
+      let parentQuestion = await Question.findById(parentQuestionId);
       parentQuestion.subQuestions.push(savedQuestion._id);
+      parentQuestion.subQuestions = parentQuestion.subQuestions.sort((q1, q2) => {
+        return q1.order - q2.order;
+      }).map((question, index) => {
+        question.order = index + 1;
+        return question;
+      });
       await parentQuestion.save();
     }
     res.json(savedQuestion);
@@ -56,9 +94,11 @@ async function deleteMasterQuestion(req, res) {
   try {
     question.remove();
     let parentQuestion = await Question.findOne({ subQuestions: question_id });
-    const index = parentQuestion.subQuestions.indexOf(question_id);
-    parentQuestion.subQuestions.splice(index, 1);
-    await parentQuestion.save();
+    if (parentQuestion) {
+      const index = parentQuestion.subQuestions.indexOf(question_id);
+      parentQuestion.subQuestions.splice(index, 1);
+      await parentQuestion.save();
+    }
     res.status(200).end();
   }
   catch (err) { sendError(res, err); }
