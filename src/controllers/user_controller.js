@@ -56,6 +56,7 @@ async function updateProfile(req, res) {
   user.location = location;
   user.avatarURL = avatarURL;
   try {
+    const stories = await Story.find({ interviewer: user._id });
     await user.save();
     const userDisplayData = {
       _id: user._id,
@@ -63,7 +64,8 @@ async function updateProfile(req, res) {
       lastName,
       displayName,
       location,
-      avatarURL
+      avatarURL,
+      stories
     }
     res.json(userDisplayData);
   }

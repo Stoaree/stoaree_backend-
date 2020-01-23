@@ -109,37 +109,10 @@ async function checkPermissions(req, res, next) {
   }
 }
 
-// async function checkPermissions(modelName) {
-//   let allowedUserId;
-
-//   switch (modelName) {
-//     case "story":
-//       const story = await Story.findById(req.params.id);
-//       allowedUserId = story.interviewer;
-//       break;
-//     case "comment":
-//       const comment = await Comment.findById(req.params.comment_id);
-//       allowedUserId = comment.user;
-//       break;
-//     default:
-//       break;
-//   }
-
-//   return async function (req, res, next) {
-//     const allowedUser = await User.findById(allowedUserId);
-//     if (user.decoded.email === allowedUser.email) {
-//       next();
-//     }
-//     else {
-//       res.status(403).end();
-//     }
-//   }
-// }
-
-async function getUser(req, res, next) {
+async function getCurrentUser(req, res, next) {
   const user = await User.findOne({ email: req.decoded.email });
   req.user = user;
   next();
 }
 
-module.exports = { checkToken, login, checkPermissions, getUser };
+module.exports = { checkToken, login, checkPermissions, getCurrentUser };
