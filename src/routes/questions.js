@@ -5,6 +5,7 @@ const { getQuestions, addQuestion, answerQuestion, deleteQuestion } = require(".
 
 // TODO: revise these later when we clarify how questions will be retrieved and answered
 
+
 router.get("/:story_id", getQuestions);
 router.post("/:story_id", checkToken, getCurrentUser, addQuestion);
 router.put("/:story_id/:question_id", checkToken, getCurrentUser, checkPermissions, answerQuestion);
