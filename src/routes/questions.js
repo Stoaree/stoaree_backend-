@@ -1,20 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-router.get("/:story_id", (req, res) => {
-  res.send("This will get the list of questions for a story");
-});
+const { getQuestions, addQuestion, answerQuestion, deleteQuestion } = require("../controllers/questions_controller");
 
-router.post("/:story_id", (req, res) => {
-  res.send("This will add a new question and response to a story");
-});
+// TODO: revise these later when we clarify how questions will be retrieved and answered
 
-router.put("/:story_id/:question_id", (req, res) => {
-  res.send("This will update a question with a new response");
-});
-
-router.delete("/:story_id/:question_id", (req, res) => {
-  res.send("This will delete a response to a question");
-});
+router.get("/:story_id", getQuestions);
+router.post("/:story_id", addQuestion);
+router.put("/:story_id/:question_id", answerQuestion);
+router.delete("/:story_id/:question_id", deleteQuestion);
 
 module.exports = router;

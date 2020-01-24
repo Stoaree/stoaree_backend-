@@ -1,12 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { login } = require("../controllers/authentication_controller")
 
-router.get('/', function (req, res) {
-  res.send('This is the login page')
-});
-
-router.post('/', function (req, res) {
-  res.send('You have posted to the login page')
-});
+router.post('/', login);
 
 module.exports = router;
