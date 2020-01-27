@@ -123,4 +123,4 @@ async function answerQuestion(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-module.exports = { getMasterQuestions, addMasterQuestion, editMasterQuestion, deleteMasterQuestion, getQuestions, answerQuestion };
+module.exports = { getMasterQuestions, addMasterQuestion, editMasterQuestion, deleteMasterQuestion, answerQuestion };
