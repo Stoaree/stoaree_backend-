@@ -5,32 +5,36 @@ const { sendError } = require("./functions");
 
 // admin functions
 
-async function getSubQuestions(questionArray) {
-  if (questionArray) {
-    let array = await questionArray.map(async (questionId) => {
-      let question = await Question.findById(questionId);
-
-      if (question.subQuestions) {
-        const subQuestions = await getSubQuestions(question.subQuestions);
-        const newSubQuestions = await Promise.all(subQuestions);
-        question = JSON.parse(JSON.stringify(question));
-        question.subQuestions = newSubQuestions;
-      }
-
-      return question;
-    });
-    return array;
-  }
+function orderQuestions(questionArray) {
+  questionArray = questionArray.sort((q1, q2) => {
+    return q1.order - q2.order;
+  }).map((question, index) => {
+    question.order = index + 1;
+    return question;
+  });
 }
 
+// async function getSubQuestions(questionArray) {
+//   if (questionArray) {
+//     let array = await questionArray.map(async (questionId) => {
+//       let question = await Question.findById(questionId);
+
+//       if (question.subQuestions) {
+//         const subQuestions = await getSubQuestions(question.subQuestions);
+//         const newSubQuestions = await Promise.all(subQuestions);
+//         question = JSON.parse(JSON.stringify(question));
+//         question.subQuestions = newSubQuestions;
+//       }
+
+//       return question;
+//     });
+//     return array;
+//   }
+// }
+
 async function getMasterQuestions(req, res) {
-  // get list of template questions
-  let questions = await Question.find({ $and: [{ isMaster: true }, { isTopLevel: true }] }).sort({ order: 1 });
-
-  questions = await getSubQuestions(questions);
-  const array = await Promise.all(questions);
-
-  res.json(array);
+  let questions = await Question.find({ isMaster: true }).sort({ order: 1 });
+  res.json(questions);
 }
 
 async function addMasterQuestion(req, res) {
@@ -49,12 +53,6 @@ async function addMasterQuestion(req, res) {
     if (parentQuestionId) {
       let parentQuestion = await Question.findById(parentQuestionId);
       parentQuestion.subQuestions.push(savedQuestion._id);
-      parentQuestion.subQuestions = parentQuestion.subQuestions.sort((q1, q2) => {
-        return q1.order - q2.order;
-      }).map((question, index) => {
-        question.order = index + 1;
-        return question;
-      });
       await parentQuestion.save();
     }
     res.json(savedQuestion);
@@ -96,30 +94,31 @@ async function deleteMasterQuestion(req, res) {
 
 // user functions
 
-async function getQuestions(req, res) {
-  // get list of all questions
-  try {
-    const story = await Story.findById(req.params.story_id);
-    res.json(story.questions);
-  }
-  catch (err) { sendError(res, err); }
-}
+// async function getQuestions(req, res) {
+//   // get list of all questions for a story
+//   try {
+//     const story = await Story.findById(req.params.story_id);
+//     res.json(story.questions);
+//   }
+//   catch (err) { sendError(res, err); }
+// }
 
 async function answerQuestion(req, res) {
-  // update a question with a response
-  const { audioFileURL } = req.body;
-  const { story_id, question_id } = req.params;
+  // add a question with a response to a story
+  const { question, audioFileURL } = req.body;
+  const { story_id } = req.params;
+
+  let story = await Story.findById(story_id);
+  let newQuestionAndAnswer = new Question({ ...question });
+  newQuestionAndAnswer.audioFileURL = audioFileURL;
+  newQuestionAndAnswer.isMaster = false;
+  newQuestionAndAnswer.subQuestions = [];
 
   try {
-    const story = await Story.findById(story_id);
-    if (story.questions.includes(question_id)) {
-      const question = Question.findById(question_id);
-      question.audioFileURL = audioFileURL;
-      await question.save();
-      story.questions.push(savedQuestion._id);
-      story.save();
-      res.json(savedQuestion);
-    }
+    const savedQuestion = await newQuestionAndAnswer.save();
+    story.questions.push(savedQuestion);
+    story.save();
+    res.status(200).end();
   }
   catch (err) { sendError(res, err); }
 }
