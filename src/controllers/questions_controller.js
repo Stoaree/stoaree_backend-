@@ -53,6 +53,7 @@ async function addMasterQuestion(req, res) {
     if (parentQuestionId) {
       let parentQuestion = await Question.findById(parentQuestionId);
       parentQuestion.subQuestions.push(savedQuestion._id);
+      parentQuestion.subQuestions = orderQuestions(parentQuestion.subQuestions);
       await parentQuestion.save();
     }
     res.json(savedQuestion);
@@ -105,14 +106,13 @@ async function deleteMasterQuestion(req, res) {
 
 async function answerQuestion(req, res) {
   // add a question with a response to a story
-  const { question, audioFileURL } = req.body;
-  const { story_id } = req.params;
+  const { question, audioFileURL, story_id } = req.body;
 
   let story = await Story.findById(story_id);
-  let newQuestionAndAnswer = new Question({ ...question });
-  newQuestionAndAnswer.audioFileURL = audioFileURL;
-  newQuestionAndAnswer.isMaster = false;
-  newQuestionAndAnswer.subQuestions = [];
+  let newQuestionAndAnswer = new Question({
+    title: question.title,
+    audioFileURL: audioFileURL
+  });
 
   try {
     const savedQuestion = await newQuestionAndAnswer.save();
