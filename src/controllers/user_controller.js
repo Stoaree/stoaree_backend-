@@ -92,4 +92,29 @@ async function updateAvatarURL(req, res) {
   }
 }
 
-module.exports = { register, getUserProfile, updateProfile, updateAvatarURL };
+
+// for testing purposes only
+async function registerAdmin(req, res) {
+  // create admin user
+  const { email, password, firstName, lastName, displayName } = req.body;
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const admin = new User({
+    email,
+    firstName,
+    lastName,
+    password: hashedPassword,
+    displayName,
+    isAdmin: true
+  });
+
+  try {
+    const savedUser = await admin.save();
+    res.json(savedUser);
+  }
+  catch (err) { sendError(res, err); }
+}
+
+module.exports = { register, getUserProfile, updateProfile, registerAdmin, updateAvatarURL };
+
