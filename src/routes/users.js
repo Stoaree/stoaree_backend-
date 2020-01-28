@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const { checkToken, checkPermissions } = require("../controllers/authentication_controller");
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const { getUserProfile, updateProfile, updateAvatarURL } = require("../controllers/user_controller");
+
+router.get("/:user_id", getUserProfile);
+router.put("/avatar_update/:user_id", checkToken, checkPermissions, updateAvatarURL);
+router.put("/:user_id", checkToken, checkPermissions, updateProfile);
 
 module.exports = router;

@@ -1,20 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const { checkToken, checkPermissions } = require("../controllers/authentication_controller");
+const { getComments, addComment, editComment, deleteComment } = require("../controllers/comments_controller");
 
-router.get("/:story_id", (req, res) => {
-  res.send("This will get the comments for a particular story");
-});
-
-router.post("/:story_id", (req, res) => {
-  res.send("This will add a new comment to a story");
-});
-
-router.put("/:story_id/:comment_id", (req, res) => {
-  res.send("This will edit a comment");
-});
-
-router.delete("/:story_id/:comment_id", (req, res) => {
-  res.send("This will delete a comment");
-});
+router.get("/:story_id", getComments);
+router.post("/:story_id", checkToken, addComment);
+router.put("/:story_id/:comment_id", checkToken, checkPermissions, editComment);
+router.delete("/:story_id/:comment_id", checkToken, checkPermissions, deleteComment);
 
 module.exports = router;

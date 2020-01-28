@@ -1,20 +1,21 @@
 var express = require('express');
 var router = express.Router();
+const { checkToken, checkPermissions, isAdmin } = require("../controllers/authentication_controller");
+const { getMasterQuestions, addMasterQuestion, editMasterQuestion, deleteMasterQuestion, answerQuestion } = require("../controllers/questions_controller");
 
-router.get("/:story_id", (req, res) => {
-  res.send("This will get the list of questions for a story");
-});
+// for admins
+router.get("/all", getMasterQuestions);
+// router.get("/admin", checkToken, isAdmin, getMasterQuestions);
+// router.post("/admin", checkToken, isAdmin, addMasterQuestion);
+// router.put("/admin/:question_id", checkToken, isAdmin, editMasterQuestion);
+// router.delete("/admin/:question_id", checkToken, isAdmin, deleteMasterQuestion);
 
-router.post("/:story_id", (req, res) => {
-  res.send("This will add a new question and response to a story");
-});
+router.get("/admin", getMasterQuestions);
+router.post("/admin", addMasterQuestion);
+router.put("/admin/:question_id", editMasterQuestion);
+router.delete("/admin/:question_id", deleteMasterQuestion);
 
-router.put("/:story_id/:question_id", (req, res) => {
-  res.send("This will update a question with a new response");
-});
-
-router.delete("/:story_id/:question_id", (req, res) => {
-  res.send("This will delete a response to a question");
-});
+// for users - come back to these later
+router.post("/:story_id", checkToken, checkPermissions, answerQuestion);
 
 module.exports = router;
