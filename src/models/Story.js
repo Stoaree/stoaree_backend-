@@ -39,7 +39,7 @@ const storySchema = new mongoose.Schema(
     },
     isPublic: {
       type: Boolean,
-      required: true
+      required: false
     }
   }, { timestamps: true });
 
