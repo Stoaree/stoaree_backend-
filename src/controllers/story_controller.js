@@ -18,8 +18,13 @@ async function getStory(req, res) {
   // return one story by id
   try {
     let story = await Story.findById(req.params.story_id);
-    story = await getStoryStuff(story);
-    res.json(story);
+    if (story) {
+      story = await getStoryStuff(story);
+      res.json(story);
+    }
+    else {
+      res.status(400).end();
+    }
   }
   catch (err) { sendError(res, err); }
 }

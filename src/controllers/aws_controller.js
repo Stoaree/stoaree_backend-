@@ -29,6 +29,8 @@ function auths3(req, res) {
       signedRequest: data,
       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
     };
+    console.log(returnData);
+
     // Send it all back
     res.json({ success: true, data: { returnData } });
   });

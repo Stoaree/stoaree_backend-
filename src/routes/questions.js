@@ -16,6 +16,7 @@ router.put("/admin/:question_id", editMasterQuestion);
 router.delete("/admin/:question_id", deleteMasterQuestion);
 
 // for users - come back to these later
-router.post("/:story_id", checkToken, checkPermissions, answerQuestion);
+// router.post("/:story_id", checkToken, checkPermissions, answerQuestion);
+router.post("/:story_id", answerQuestion);
 
 module.exports = router;
