@@ -36,6 +36,10 @@ const storySchema = new mongoose.Schema(
     imageURL: {
       type: String,
       required: false
+    },
+    isPublic: {
+      type: Boolean,
+      required: true
     }
   }, { timestamps: true });
 
