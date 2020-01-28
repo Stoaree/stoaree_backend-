@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema(
     bookmarks: {
       type: [ObjectId],
       required: false
+    },
+    isAdmin: {
+      type: Boolean,
+      required: false
     }
   }
 );
