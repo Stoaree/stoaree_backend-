@@ -4,6 +4,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
+require('dotenv').config()
 const { auths3 } = require("./controllers/aws_controller");
 
 const indexRouter = require("./routes/index");
@@ -16,9 +17,10 @@ const questionsRouter = require("./routes/questions");
 const commentsRouter = require("./routes/comments");
 
 // Database
-const mongoose = require("mongoose");
-require("dotenv").config();
-const mongodbURI = process.env.DB_URI;
+const mongoose = require('mongoose');
+
+const mongodbURI = process.env.DB_URI
+console.log(mongodbURI)
 
 const app = express();
 
