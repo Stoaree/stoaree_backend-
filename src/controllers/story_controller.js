@@ -37,9 +37,6 @@ async function createStory(req, res) {
   if (interviewee) {
     interviewee = interviewee._id;
   };
-  if (tags) {
-    tags = tags.split(", ");
-  }
 
   const newStory = new Story({
     title,
@@ -52,9 +49,6 @@ async function createStory(req, res) {
     imageURL,
     isPublic
   });
-
-  console.log(newStory);
-
 
   try {
     let savedStory = await newStory.save();

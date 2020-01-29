@@ -120,7 +120,6 @@ async function answerQuestion(req, res) {
     const savedQuestion = await newQuestionAndAnswer.save();
     story.questions.push(savedQuestion);
     story.save();
-    console.log(savedQuestion);
     res.status(200).end();
   }
   catch (err) { sendError(res, err); }
