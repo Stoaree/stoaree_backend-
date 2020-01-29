@@ -4,6 +4,7 @@ const Comment = require("../models/Comment");
 const Question = require("../models/Question");
 
 function sendError(res, err) {
+  console.log(err);
   res.status(400).send('Error: ' + err);
 }
 

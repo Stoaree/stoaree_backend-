@@ -9,7 +9,7 @@ const questionSchema = new mongoose.Schema(
     },
     order: {
       type: Number,
-      required: true
+      required: false
     },
     isTopLevel: {
       type: Boolean,

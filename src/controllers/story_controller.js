@@ -1,4 +1,6 @@
 const Story = require("../models/Story");
+const User = require("../models/User");
+
 const { sendError, getStoryStuff } = require("./functions");
 
 async function getStories(req, res) {
@@ -16,15 +18,26 @@ async function getStory(req, res) {
   // return one story by id
   try {
     let story = await Story.findById(req.params.story_id);
-    story = await getStoryStuff(story);
-    res.json(story);
+    if (story) {
+      story = await getStoryStuff(story);
+      res.json(story);
+    }
+    else {
+      res.status(400).end();
+    }
   }
   catch (err) { sendError(res, err); }
 }
 
 async function createStory(req, res) {
   // add new story
-  const { title, description, interviewer, interviewee, tags, questions } = req.body;
+  let { title, description, interviewee, tags, isPublic, imageURL } = req.body;
+
+  interviewee = await User.find({ email: interviewee });
+  if (interviewee) {
+    interviewee = interviewee._id;
+  };
+
   const newStory = new Story({
     title,
     description,
@@ -32,13 +45,15 @@ async function createStory(req, res) {
     interviewee,
     tags,
     comments: [],
-    questions
+    questions: [],
+    imageURL,
+    isPublic
   });
 
   try {
     let savedStory = await newStory.save();
     savedStory = await getStoryStuff(savedStory);
-    res.json(savedStory);
+    res.status(200).json(savedStory);
   }
   catch (err) { sendError(res, err); }
 }
