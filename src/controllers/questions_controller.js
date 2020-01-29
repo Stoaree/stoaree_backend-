@@ -106,8 +106,6 @@ async function deleteMasterQuestion(req, res) {
 
 async function answerQuestion(req, res) {
   // add a question with a response to a story
-  console.log("Reaching answerQuestion");
-
   const { question, audioFileURL } = req.body;
 
   let story = await Story.findById(req.params.story_id);
