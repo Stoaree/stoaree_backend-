@@ -3,7 +3,7 @@ const router = express.Router();
 const Story = require("../models/Story");
 const { getStoryStuff } = require("../controllers/functions");
 
-const SEARCH_LIMIT = 6;
+const SEARCH_LIMIT = 10;
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
