@@ -79,15 +79,13 @@ async function updateAvatarURL(req, res) {
   user.avatarURL = avatarURL;
 
   try {
-    const stories = await Story.find({ interviewer: user._id });
-
     await user.save();
     const userDisplayData = {
       _id: user._id,
       avatarURL
     }
     res.json(userDisplayData);
-  }catch(err) {
+  } catch (err) {
     sendError(res, err);
   }
 }
@@ -117,4 +115,3 @@ async function registerAdmin(req, res) {
 }
 
 module.exports = { register, getUserProfile, updateProfile, registerAdmin, updateAvatarURL };
-
