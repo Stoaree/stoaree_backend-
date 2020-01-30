@@ -16,7 +16,8 @@ async function getUserStuff(userId) {
   if (user) {
     userForDisplay = {
       _id: userId,
-      displayName: user.displayName
+      displayName: user.displayName,
+      avatarURL: user.avatarURL
     }
   }
 
