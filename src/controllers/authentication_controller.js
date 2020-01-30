@@ -72,7 +72,8 @@ async function login(req, res) {
         res.json({
           success: true,
           message: 'Authentication successful!',
-          token: token
+          token: token,
+          user_id: user._id
         });
       }
       else {
