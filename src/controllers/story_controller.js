@@ -36,7 +36,10 @@ async function createStory(req, res) {
   intervieweeObj = await User.findOne({ email: interviewee });
   if (intervieweeObj) {
     interviewee = intervieweeObj._id;
-  };
+  }
+  else {
+    interviewee = null;
+  }
 
   const newStory = new Story({
     title,
@@ -81,9 +84,5 @@ async function deleteStory(req, res) {
   }
   catch (err) { sendError(res, err); }
 }
-
-
-
-
 
 module.exports = { getStories, getStory, createStory, editStory, deleteStory };
