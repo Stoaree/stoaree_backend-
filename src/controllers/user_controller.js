@@ -90,6 +90,19 @@ async function updateAvatarURL(req, res) {
   }
 }
 
+async function addLike(req, res) {
+  try {
+    const {story_id} = req.body;
+    let story = await Story.findById(story_id);
+    let user = req.user;
+    user.bookmarks.push(story_id);
+    await user.save();
+    story.likes = story.likes+1
+    await story.save();
+    res.status(200).end();
+  }
+  catch (err) { sendError(res, err); }
+}
 
 // for testing purposes only
 async function registerAdmin(req, res) {
@@ -114,4 +127,4 @@ async function registerAdmin(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-module.exports = { register, getUserProfile, updateProfile, registerAdmin, updateAvatarURL };
+module.exports = { register, getUserProfile, updateProfile, registerAdmin, updateAvatarURL , addLike };

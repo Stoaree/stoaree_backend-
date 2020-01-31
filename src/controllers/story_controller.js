@@ -33,7 +33,7 @@ async function createStory(req, res) {
   // add new story
   let { title, description, interviewee, tags, isPublic, imageURL } = req.body;
 
-  interviewee = await User.find({ email: interviewee });
+  interviewee = await User.findOne({ email: interviewee });
   if (interviewee) {
     interviewee = interviewee._id;
   };
@@ -80,5 +80,9 @@ async function deleteStory(req, res) {
   }
   catch (err) { sendError(res, err); }
 }
+
+
+
+
 
 module.exports = { getStories, getStory, createStory, editStory, deleteStory };
