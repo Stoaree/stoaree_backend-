@@ -56,7 +56,9 @@ async function addMasterQuestion(req, res) {
       // parentQuestion.subQuestions = orderQuestions(parentQuestion.subQuestions);
       await parentQuestion.save();
     }
-    res.json(savedQuestion);
+
+    let questions = await Question.find({ isMaster: true }).sort({ order: 1 });
+    res.json(questions);
   }
   catch (err) { sendError(res, err); }
 }
@@ -64,10 +66,10 @@ async function addMasterQuestion(req, res) {
 async function editMasterQuestion(req, res) {
   const { title, order, isTopLevel, isYesOrNo } = req.body;
   let question = await Question.findById(req.params.question_id);
-  question.title = title;
-  question.order = order;
-  question.isTopLevel = isTopLevel;
-  question.isYesOrNo = isYesOrNo;
+  question.title = title || question.title;
+  question.order = order || question.order;
+  question.isTopLevel = isTopLevel || question.isTopLevel;
+  question.isYesOrNo = isYesOrNo || question.isYesOrNo;
 
   try {
     await question.save();

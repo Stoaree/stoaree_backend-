@@ -5,10 +5,10 @@ const { getMasterQuestions, addMasterQuestion, editMasterQuestion, deleteMasterQ
 
 // for admins
 router.get("/all", getMasterQuestions);
-// router.get("/admin", checkToken, isAdmin, getMasterQuestions);
-// router.post("/admin", checkToken, isAdmin, addMasterQuestion);
-// router.put("/admin/:question_id", checkToken, isAdmin, editMasterQuestion);
-// router.delete("/admin/:question_id", checkToken, isAdmin, deleteMasterQuestion);
+router.get("/admin", checkToken, isAdmin, getMasterQuestions);
+router.post("/admin", checkToken, isAdmin, addMasterQuestion);
+router.put("/admin/:question_id", checkToken, isAdmin, editMasterQuestion);
+router.delete("/admin/:question_id", checkToken, isAdmin, deleteMasterQuestion);
 
 router.get("/admin", getMasterQuestions);
 router.post("/admin", addMasterQuestion);
