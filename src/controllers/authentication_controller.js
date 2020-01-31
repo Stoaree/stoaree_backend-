@@ -53,18 +53,13 @@ async function login(req, res) {
   let { email, password } = req.body;
 
   if (email && password) {
-    console.log(email);
-    console.log(password);
     // For the given username fetch user from DB
     const user = await User.findOne({ email: email });
-
-    console.log(user);
 
     if (user) {
       const passwordComparison = await bcrypt.compare(password, user.password);
       if (passwordComparison) {
-        console.log(passwordComparison);
-        let token = jwt.sign({ email: email },
+        let token = jwt.sign({ email: email, admin: user.isAdmin },
           process.env.TokenSecretKey,
           { expiresIn: '24h' });
 

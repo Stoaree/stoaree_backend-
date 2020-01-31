@@ -40,6 +40,10 @@ const storySchema = new mongoose.Schema(
     isPublic: {
       type: Boolean,
       required: false
+    },
+    likes: {
+      type: Number,
+      required: false
     }
   }, { timestamps: true });
 

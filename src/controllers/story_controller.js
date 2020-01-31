@@ -33,9 +33,9 @@ async function createStory(req, res) {
   // add new story
   let { title, description, interviewee, tags, isPublic, imageURL } = req.body;
 
-  interviewee = await User.find({ email: interviewee });
-  if (interviewee) {
-    interviewee = interviewee._id;
+  intervieweeObj = await User.findOne({ email: interviewee });
+  if (intervieweeObj) {
+    interviewee = intervieweeObj._id;
   };
 
   const newStory = new Story({
@@ -47,7 +47,8 @@ async function createStory(req, res) {
     comments: [],
     questions: [],
     imageURL,
-    isPublic
+    isPublic,
+    likes: 0
   });
 
   try {
