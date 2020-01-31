@@ -1,6 +1,6 @@
 const Comment = require("../models/Comment");
 const Story = require("../models/Story");
-const { sendError } = require("./functions");
+const { sendError, getUserStuff } = require("./functions");
 
 async function getComments(req, res) {
   // get comments for a story
@@ -19,10 +19,15 @@ async function addComment(req, res) {
   });
 
   try {
-    const savedComment = await newComment.save();
+    let savedComment = await newComment.save();
     const story = await Story.findById(req.params.story_id);
     story.comments.push(savedComment._id);
     await story.save();
+    const user = await getUserStuff(req.user._id);
+
+    savedComment = JSON.parse(JSON.stringify(savedComment));
+    savedComment.user = user;
+
     res.json(savedComment);
   }
   catch (err) { sendError(res, err); }

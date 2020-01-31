@@ -5,17 +5,17 @@ const { getMasterQuestions, addMasterQuestion, editMasterQuestion, deleteMasterQ
 
 // for admins
 router.get("/all", getMasterQuestions);
-// router.get("/admin", checkToken, isAdmin, getMasterQuestions);
-// router.post("/admin", checkToken, isAdmin, addMasterQuestion);
-// router.put("/admin/:question_id", checkToken, isAdmin, editMasterQuestion);
-// router.delete("/admin/:question_id", checkToken, isAdmin, deleteMasterQuestion);
+router.get("/admin", checkToken, isAdmin, getMasterQuestions);
+router.post("/admin", checkToken, isAdmin, addMasterQuestion);
+router.put("/admin/:question_id", checkToken, isAdmin, editMasterQuestion);
+router.delete("/admin/:question_id", checkToken, isAdmin, deleteMasterQuestion);
 
 router.get("/admin", getMasterQuestions);
 router.post("/admin", addMasterQuestion);
 router.put("/admin/:question_id", editMasterQuestion);
 router.delete("/admin/:question_id", deleteMasterQuestion);
 
-// for users - come back to these later
+// for users
 router.post("/:story_id", checkToken, checkPermissions, answerQuestion);
 
 module.exports = router;
