@@ -41,7 +41,7 @@ const storySchema = new mongoose.Schema(
       type: Boolean,
       required: false
     },
-    like: {
+    likes: {
       type: Number,
       required: false
     }
