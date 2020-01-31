@@ -36,7 +36,10 @@ async function createStory(req, res) {
   intervieweeObj = await User.findOne({ email: interviewee });
   if (intervieweeObj) {
     interviewee = intervieweeObj._id;
-  };
+  }
+  else {
+    interviewee = null;
+  }
 
   const newStory = new Story({
     title,
