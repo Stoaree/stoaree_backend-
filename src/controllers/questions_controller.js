@@ -5,14 +5,14 @@ const { sendError } = require("./functions");
 
 // admin functions
 
-function orderQuestions(questionArray) {
-  questionArray = questionArray.sort((q1, q2) => {
-    return q1.order - q2.order;
-  }).map((question, index) => {
-    question.order = index + 1;
-    return question;
-  });
-}
+// function orderQuestions(questionArray) {
+//   questionArray = questionArray.sort((q1, q2) => {
+//     return q1.order - q2.order;
+//   }).map((question, index) => {
+//     question.order = index + 1;
+//     return question;
+//   });
+// }
 
 // async function getSubQuestions(questionArray) {
 //   if (questionArray) {
@@ -99,15 +99,6 @@ async function deleteMasterQuestion(req, res) {
 }
 
 // user functions
-
-// async function getQuestions(req, res) {
-//   // get list of all questions for a story
-//   try {
-//     const story = await Story.findById(req.params.story_id);
-//     res.json(story.questions);
-//   }
-//   catch (err) { sendError(res, err); }
-// }
 
 async function answerQuestion(req, res) {
   // add a question with a response to a story
