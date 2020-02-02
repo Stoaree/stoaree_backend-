@@ -93,7 +93,7 @@ async function updateAvatarURL(req, res) {
 
 async function addLike(req, res) {
   try {
-    const {story_id} = req.body;
+    const { story_id } = req.body;
     let story = await Story.findById(story_id);
     let user = req.user;
     user.bookmarks.push(story_id);
