@@ -27,15 +27,11 @@ async function register(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-async function getUserProfile(req, res) {
-  // get user profile data
-  const { user_id } = req.params;
-  const user = await User.findById(user_id);
+async function getUserStuff(user) {
   const { firstName, lastName, displayName, location, avatarURL, bookmarks } = user;
-  const stories = await Story.find({ interviewer: user_id });
-
-  const userDisplayData = {
-    _id: user_id,
+  const stories = await Story.find({ interviewer: user._id });
+  return {
+    _id: user._id,
     firstName,
     lastName,
     displayName,
@@ -44,7 +40,16 @@ async function getUserProfile(req, res) {
     stories,
     bookmarks
   }
+}
 
+async function getUserProfile(req, res) {
+  // get user profile data
+  const { user_id } = req.params;
+  const user = await User.findById(user_id);
+  // const { firstName, lastName, displayName, location, avatarURL, bookmarks } = user;
+  // const stories = await Story.find({ interviewer: user_id });
+
+  const userDisplayData = await getUserStuff(user);
   res.json(userDisplayData);
 }
 
@@ -115,4 +120,11 @@ async function registerAdmin(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-module.exports = { register, getUserProfile, updateProfile, registerAdmin, updateAvatarURL };
+async function getCurrentUser(req, res) {
+  // get currently logged-in user's data
+  const user = req.user;
+  const userDisplayData = await getUserStuff(user);
+  res.json(userDisplayData);
+}
+
+module.exports = { register, getUserProfile, updateProfile, registerAdmin, updateAvatarURL, getCurrentUser };
