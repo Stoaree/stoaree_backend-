@@ -6,7 +6,7 @@ const { getUserProfile, updateProfile, updateAvatarURL, getCurrentUser } = requi
 
 router.get("/current", checkToken, getCurrentUser);
 router.get("/:user_id", getUserProfile);
-router.put("/avatar_update/:user_id", checkToken, checkPermissions, updateAvatarURL);
-router.put("/:user_id", checkToken, checkPermissions, updateProfile);
+// router.put("/avatar_update/:user_id", checkToken, checkPermissions, updateAvatarURL);
+router.put("/profile", checkToken, updateProfile);
 
 module.exports = router;

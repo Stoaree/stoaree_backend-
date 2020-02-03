@@ -28,10 +28,11 @@ async function register(req, res) {
 }
 
 async function getUserStuff(user) {
-  const { firstName, lastName, displayName, location, avatarURL, bookmarks } = user;
+  const { email, firstName, lastName, displayName, location, avatarURL, bookmarks } = user;
   const stories = await Story.find({ interviewer: user._id });
   return {
     _id: user._id,
+    email,
     firstName,
     lastName,
     displayName,
@@ -44,36 +45,24 @@ async function getUserStuff(user) {
 
 async function getUserProfile(req, res) {
   // get user profile data
-  const { user_id } = req.params;
-  const user = await User.findById(user_id);
-  // const { firstName, lastName, displayName, location, avatarURL, bookmarks } = user;
-  // const stories = await Story.find({ interviewer: user_id });
-
+  const user = await User.findById(req.params.user_id);
   const userDisplayData = await getUserStuff(user);
   res.json(userDisplayData);
 }
 
 async function updateProfile(req, res) {
   let user = req.user;
-  const { firstName, lastName, displayName, location, avatarURL } = req.body;
-  user.firstName = firstName;
-  user.lastName = lastName;
-  user.displayName = displayName;
+  const { email, firstName, lastName, displayName, location, avatarURL } = req.body;
+  user.email = email || user.email;
+  user.firstName = firstName || user.firstName;
+  user.lastName = lastName || user.lastName;
+  user.displayName = displayName || user.displayName;
   user.location = location;
-  user.avatarURL = avatarURL;
+  user.avatarURL = avatarURL || user.avatarURL;
   try {
-    const stories = await Story.find({ interviewer: user._id });
-    await user.save();
-    const userDisplayData = {
-      _id: user._id,
-      firstName,
-      lastName,
-      displayName,
-      location,
-      avatarURL,
-      stories
-    }
-    res.json(userDisplayData);
+    user.save();
+    const userDisplayData = await getUserStuff(user);
+    res.status(200).json(userDisplayData);
   }
   catch (err) { sendError(res, err); }
 }
@@ -95,7 +84,6 @@ async function updateAvatarURL(req, res) {
     sendError(res, err);
   }
 }
-
 
 // for testing purposes only
 async function registerAdmin(req, res) {
