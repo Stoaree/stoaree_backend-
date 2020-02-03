@@ -27,7 +27,7 @@ async function register(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-async function getUserStuff(user) {
+async function getUserProfileStuff(user) {
   const { email, firstName, lastName, displayName, location, avatarURL, bookmarks } = user;
   const stories = await Story.find({ interviewer: user._id });
   return {
@@ -46,7 +46,7 @@ async function getUserStuff(user) {
 async function getUserProfile(req, res) {
   // get user profile data
   const user = await User.findById(req.params.user_id);
-  const userDisplayData = await getUserStuff(user);
+  const userDisplayData = await getUserProfileStuff(user);
   res.json(userDisplayData);
 }
 
@@ -61,7 +61,7 @@ async function updateProfile(req, res) {
   user.avatarURL = avatarURL || user.avatarURL;
   try {
     user.save();
-    const userDisplayData = await getUserStuff(user);
+    const userDisplayData = await getUserProfileStuff(user);
     res.status(200).json(userDisplayData);
   }
   catch (err) { sendError(res, err); }
@@ -111,7 +111,7 @@ async function registerAdmin(req, res) {
 async function getCurrentUser(req, res) {
   // get currently logged-in user's data
   const user = req.user;
-  const userDisplayData = await getUserStuff(user);
+  const userDisplayData = await getUserProfileStuff(user);
   res.json(userDisplayData);
 }
 

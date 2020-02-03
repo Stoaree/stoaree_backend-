@@ -63,15 +63,25 @@ async function createStory(req, res) {
 }
 
 async function editStory(req, res) {
-  const { title, description, tags } = req.body;
+  const { title, description, interviewee, tags, imageURL, isPublic } = req.body;
   const story = await Story.findById(req.params.story_id);
-  story.title = title;
+  story.title = title || story.title;
   story.description = description;
   story.tags = tags;
+  story.imageURL = imageURL || story.imageURL;
+  story.isPublic = isPublic;
+
+  intervieweeObj = await User.findOne({ email: interviewee });
+  if (intervieweeObj) {
+    story.interviewee = intervieweeObj._id;
+  }
+  else {
+    story.interviewee = null;
+  }
 
   try {
     await story.save();
-    res.json(story);
+    res.status(200).json(story);
   }
   catch (err) { sendError(res, err); }
 }
