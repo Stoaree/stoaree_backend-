@@ -29,7 +29,9 @@ async function getStoryStuff(story) {
   let updatedStory = JSON.parse(JSON.stringify(story));
 
   updatedStory.interviewer = await getUserStuff(story.interviewer);
-  updatedStory.interviewee = await getUserStuff(story.interviewee);
+  if (updatedStory.interviewee) {
+    updatedStory.interviewee = await getUserStuff(story.interviewee);
+  }
 
   const comments = story.comments.map(async (commentId) => {
     let comment = await Comment.findById(commentId);

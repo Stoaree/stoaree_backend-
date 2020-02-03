@@ -17,7 +17,8 @@ async function register(req, res) {
     displayName,
     dateOfBirth,
     location,
-    avatarURL
+    avatarURL,
+    bookmarks: []
   });
 
   try {
@@ -27,15 +28,19 @@ async function register(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-async function getUserProfile(req, res) {
-  // get user profile data
-  const { user_id } = req.params;
-  const user = await User.findById(user_id);
-  const { firstName, lastName, displayName, location, avatarURL, bookmarks } = user;
-  const stories = await Story.find({ interviewer: user_id });
+async function getUserProfileStuff(user, currentUser = false) {
+  const { email, firstName, lastName, displayName, location, avatarURL, bookmarks } = user;
+  let stories;
+  if (currentUser) {
+    stories = await Story.find({ interviewer: user._id });
+  }
+  else {
+    stories = await Story.find({ interviewer: user._id, isPublic: true });
+  }
 
-  const userDisplayData = {
-    _id: user_id,
+  return {
+    _id: user._id,
+    email,
     firstName,
     lastName,
     displayName,
@@ -44,31 +49,31 @@ async function getUserProfile(req, res) {
     stories,
     bookmarks
   }
+}
 
+async function getUserProfile(req, res) {
+  // get user profile data
+  const { user_id } = req.params;
+  const user = await User.findById(user_id);
+  const isCurrentUser = req.user && (user_id === req.user._id);
+  const userDisplayData = await getUserProfileStuff(user, isCurrentUser);
   res.json(userDisplayData);
 }
 
 async function updateProfile(req, res) {
   let user = req.user;
-  const { firstName, lastName, displayName, location, avatarURL } = req.body;
-  user.firstName = firstName;
-  user.lastName = lastName;
-  user.displayName = displayName;
+  const { email, firstName, lastName, displayName, location, avatarURL } = req.body;
+  user.email = email || user.email;
+  user.firstName = firstName || user.firstName;
+  user.lastName = lastName || user.lastName;
+  user.displayName = displayName || user.displayName;
   user.location = location;
-  user.avatarURL = avatarURL;
+  user.avatarURL = avatarURL || user.avatarURL;
+  user.bookmarks = [];
   try {
-    const stories = await Story.find({ interviewer: user._id });
-    await user.save();
-    const userDisplayData = {
-      _id: user._id,
-      firstName,
-      lastName,
-      displayName,
-      location,
-      avatarURL,
-      stories
-    }
-    res.json(userDisplayData);
+    user.save();
+    const userDisplayData = await getUserProfileStuff(user);
+    res.status(200).json(userDisplayData);
   }
   catch (err) { sendError(res, err); }
 }
@@ -91,6 +96,12 @@ async function updateAvatarURL(req, res) {
   }
 }
 
+async function getCurrentUser(req, res) {
+  // get currently logged-in user's data
+  const userDisplayData = await getUserProfileStuff(req.user, true);
+  res.json({ ...userDisplayData, success: req.success });
+}
+
 async function addLike(req, res) {
   try {
     const { story_id } = req.body;
@@ -98,7 +109,7 @@ async function addLike(req, res) {
     let user = req.user;
     user.bookmarks.push(story_id);
     await user.save();
-    story.likes = story.likes+1
+    story.likes = story.likes + 1
     await story.save();
     res.status(200).end();
   }
@@ -106,6 +117,7 @@ async function addLike(req, res) {
 }
 
 // for testing purposes only
+
 async function registerAdmin(req, res) {
   // create admin user
   const { email, password, firstName, lastName, displayName } = req.body;
@@ -128,4 +140,4 @@ async function registerAdmin(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-module.exports = { register, getUserProfile, updateProfile, registerAdmin, updateAvatarURL , addLike };
+module.exports = { register, getUserProfile, updateProfile, registerAdmin, updateAvatarURL, getCurrentUser, addLike };

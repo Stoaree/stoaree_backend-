@@ -34,6 +34,7 @@ let checkToken = (req, res, next) => {
       }
       else {
         getUser(decoded.email).then(user => {
+          req.success = true;
           req.user = user;
           next();
         });
