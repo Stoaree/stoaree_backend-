@@ -20,7 +20,7 @@ let checkToken = (req, res, next) => {
   if (token.startsWith('Bearer ')) {
     // Remove Bearer from string
     token = token.slice(7, token.length);
-  }
+  }0
 
   if (token) {
     // Pass in the token and the secret key into verify()
