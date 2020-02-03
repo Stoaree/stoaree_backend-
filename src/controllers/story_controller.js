@@ -6,7 +6,7 @@ const { sendError, getStoryStuff } = require("./functions");
 async function getStories(req, res) {
   // return list of stories
   try {
-    let stories = await Story.find();
+    let stories = await Story.find({ isPublic: true });
     stories = stories.map(story => getStoryStuff(story));
     const storiesForDisplay = await Promise.all(stories);
     res.json(storiesForDisplay);

@@ -27,9 +27,16 @@ async function register(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-async function getUserProfileStuff(user) {
+async function getUserProfileStuff(user, currentUser = false) {
   const { email, firstName, lastName, displayName, location, avatarURL, bookmarks } = user;
-  const stories = await Story.find({ interviewer: user._id });
+  let stories;
+  if (currentUser) {
+    stories = await Story.find({ interviewer: user._id });
+  }
+  else {
+    stories = await Story.find({ interviewer: user._id, isPublic: true });
+  }
+
   return {
     _id: user._id,
     email,
@@ -45,8 +52,10 @@ async function getUserProfileStuff(user) {
 
 async function getUserProfile(req, res) {
   // get user profile data
-  const user = await User.findById(req.params.user_id);
-  const userDisplayData = await getUserProfileStuff(user);
+  const { user_id } = req.params;
+  const user = await User.findById(user_id);
+  const isCurrentUser = req.user && (user_id === req.user._id);
+  const userDisplayData = await getUserProfileStuff(user, isCurrentUser);
   res.json(userDisplayData);
 }
 
@@ -85,7 +94,14 @@ async function updateAvatarURL(req, res) {
   }
 }
 
+async function getCurrentUser(req, res) {
+  // get currently logged-in user's data
+  const userDisplayData = await getUserProfileStuff(req.user, true);
+  res.json(userDisplayData);
+}
+
 // for testing purposes only
+
 async function registerAdmin(req, res) {
   // create admin user
   const { email, password, firstName, lastName, displayName } = req.body;
@@ -106,13 +122,6 @@ async function registerAdmin(req, res) {
     res.json(savedUser);
   }
   catch (err) { sendError(res, err); }
-}
-
-async function getCurrentUser(req, res) {
-  // get currently logged-in user's data
-  const user = req.user;
-  const userDisplayData = await getUserProfileStuff(user);
-  res.json(userDisplayData);
 }
 
 module.exports = { register, getUserProfile, updateProfile, registerAdmin, updateAvatarURL, getCurrentUser };
