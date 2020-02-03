@@ -15,6 +15,8 @@ const signupRouter = require("./routes/signup.js");
 const loginRouter = require("./routes/login.js");
 const questionsRouter = require("./routes/questions");
 const commentsRouter = require("./routes/comments");
+const likesRouter = require("./routes/likes");
+
 
 // Database
 const mongoose = require('mongoose');
@@ -34,6 +36,7 @@ app.use("/users", usersRouter);
 app.use("/stories", storiesRouter);
 app.use("/questions", questionsRouter);
 app.use("/comments", commentsRouter);
+app.use("/likes", likesRouter);
 app.use("/search", searchRouter);
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
