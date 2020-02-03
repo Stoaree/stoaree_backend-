@@ -17,7 +17,8 @@ async function register(req, res) {
     displayName,
     dateOfBirth,
     location,
-    avatarURL
+    avatarURL,
+    bookmarks: []
   });
 
   try {
@@ -68,6 +69,7 @@ async function updateProfile(req, res) {
   user.displayName = displayName || user.displayName;
   user.location = location;
   user.avatarURL = avatarURL || user.avatarURL;
+  user.bookmarks = [];
   try {
     user.save();
     const userDisplayData = await getUserProfileStuff(user);
@@ -97,7 +99,7 @@ async function updateAvatarURL(req, res) {
 async function getCurrentUser(req, res) {
   // get currently logged-in user's data
   const userDisplayData = await getUserProfileStuff(req.user, true);
-  res.json(userDisplayData);
+  res.json({ ...userDisplayData, success: req.success });
 }
 
 // for testing purposes only
