@@ -1,6 +1,7 @@
 let jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
 require("dotenv").config();
+const createError = require("http-errors");
 
 const User = require("../models/User");
 const Story = require("../models/Story");
@@ -20,17 +21,13 @@ let checkToken = (req, res, next) => {
   if (token.startsWith('Bearer ')) {
     // Remove Bearer from string
     token = token.slice(7, token.length);
-  }0
+  }
 
   if (token) {
     // Pass in the token and the secret key into verify()
     jwt.verify(token, process.env.TokenSecretKey, (err, decoded) => {
       if (err) {
-        return res.json(
-          {
-            success: false,
-            message: 'Token is not valid'
-          });
+        next(createError(403, "Token is not supplied"));
       }
       else {
         getUser(decoded.email).then(user => {
@@ -42,15 +39,11 @@ let checkToken = (req, res, next) => {
     });
   }
   else {
-    return res.status(403).json(
-      {
-        success: false,
-        message: 'Auth token is not supplied'
-      });
+    next(createError(403, "Auth token is not supplied"));
   }
 };
 
-async function login(req, res) {
+async function login(req, res, next) {
   let { email, password } = req.body;
 
   if (email && password) {
@@ -73,24 +66,17 @@ async function login(req, res) {
         });
       }
       else {
-        res.status(403).send("No user found");
+        // res.status(403).send("No user found");
+        next(createError(403, "No user found"));
       }
 
     }
     else {
-      res.sendStatus(403).json(
-        {
-          success: false,
-          message: 'Incorrect email or password'
-        });
+      next(createError(403, "Incorrect email or password"));
     }
   }
   else {
-    res.sendStatus(400).json(
-      {
-        success: false,
-        message: 'Authentication failed! Please check the request'
-      });
+    next(createError(400, "Authentication failed! Please check the request"));
   }
 }
 
