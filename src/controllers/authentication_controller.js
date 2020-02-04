@@ -27,7 +27,7 @@ let checkToken = (req, res, next) => {
     // Pass in the token and the secret key into verify()
     jwt.verify(token, process.env.TokenSecretKey, (err, decoded) => {
       if (err) {
-        next(createError(403, "Token is not supplied"));
+        next(createError(403, "Token is not valid"));
       }
       else {
         getUser(decoded.email).then(user => {
