@@ -114,9 +114,9 @@ async function addLike(req, res) {
     let user = req.user;
     user.bookmarks.push(story_id);
     await user.save();
-    story.likes = story.likes + 1
+    story.likes = story.likes + 1;
     await story.save();
-    res.status(200).end();
+    res.status(200).json(user);
   }
   catch (err) { sendError(res, err); }
 }
