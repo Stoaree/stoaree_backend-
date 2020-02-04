@@ -99,7 +99,12 @@ async function updateAvatarURL(req, res) {
 async function getCurrentUser(req, res) {
   // get currently logged-in user's data
   const userDisplayData = await getUserProfileStuff(req.user, true);
-  res.json({ ...userDisplayData, success: req.success });
+  if (userDisplayData) {
+    res.json({ ...userDisplayData, success: req.success });
+  }
+  else {
+    res.send();
+  }
 }
 
 async function addLike(req, res) {

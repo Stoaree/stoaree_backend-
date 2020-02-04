@@ -69,7 +69,6 @@ async function editMasterQuestion(req, res) {
 
   question.title = title || question.title;
   question.order = order || question.order;
-  question.isTopLevel = isTopLevel;
   question.isYesOrNo = isYesOrNo;
 
   try {
