@@ -68,6 +68,13 @@ describe("Test login", () => {
     done();
   });
 
+  test("Login with incorrect password", async (done) => {
+    await request(app).post("/login")
+      .send({ email: validEmail, password: "1234" })
+      .expect(403);
+    done();
+  });
+
   test("Login with no username and password", async (done) => {
     await request(app).post("/login")
       .send({ email: null, password: null })
@@ -99,12 +106,34 @@ describe("Test story routes", () => {
     done();
   });
 
+  test("Try to create new story with missing title", async done => {
+    await request(app).post("/stories")
+      .set("Authorization", token)
+      .send({
+        description: "Test description",
+        tags: ["test", "cool"],
+        isPublic: true,
+        imageURL: "http://fakeurl.png"
+      })
+      .expect(400);
+    done();
+  });
+
   test("Get all stories", async done => {
     await request(app).get("/stories")
       .expect(200)
       .then(res => {
         expect(res.body.length).toBe(1);
       })
+    done();
+  });
+
+  test("Search for a story by title", async done => {
+    await request(app).get("/search/test")
+      .expect(200)
+      .then(res => {
+        expect(res.body.length).toBe(1);
+      });
     done();
   });
 
@@ -228,6 +257,12 @@ describe("Test user profiles", () => {
       })
     done();
   });
+
+  test("Try to get current user while not logged in", async done => {
+    await request(app).get("/users/current")
+      .expect(403);
+    done();
+  });
 });
 
 describe("Test comment routes", () => {
@@ -254,24 +289,25 @@ describe("Test comment routes", () => {
       .then(async res => {
         expect(res.body.text).toBe("Test comment");
         const updatedStory = await Story.findOne();
-        expect(updatedStory.comments.length).toBe(1);
+        expect(JSON.stringify(updatedStory.comments[0])).toBe(JSON.stringify(res.body._id));
+        const comment = await Comment.findById(updatedStory.comments[0]);
+        expect(comment.text).toBe("Test comment");
       });
     done();
   })
 
   test("Get comments for a story", async done => {
-    request(app).get(`/comments/${story._id}`)
-      .expect(200)
-      .then(async res => {
-        expect(res.body.length).toBe(1);
-        const comment = await Comment.findById(res.body[0]);
-        expect(comment.text).toBe("Test comment");
-      });
+    await request(app).get(`/comments/${story._id}`)
+      .expect(200);
     done();
   });
 
   test("Edit a comment", async done => {
-    const comment = await Comment.findOne();
+    await request(app).post(`/comments/${story._id}`)
+      .set("Authorization", token)
+      .send({ text: "Comment for editing" });
+
+    const comment = await Comment.findOne({ text: "Comment for editing" });
     await request(app).put(`/comments/${story._id}/${comment._id}`)
       .set("Authorization", token)
       .send({ text: "Updated comment" })
@@ -283,13 +319,23 @@ describe("Test comment routes", () => {
   });
 
   test("Delete a comment", async done => {
-    const comment = await Comment.findOne();
+    await request(app).post(`/comments/${story._id}`)
+      .set("Authorization", token)
+      .send({ text: "Comment to delete" });
+
+    let comment = await Comment.findOne({ text: "Comment to delete" });
     await request(app).delete(`/comments/${story._id}/${comment._id}`)
       .set("Authorization", token)
       .expect(200)
-      .then(res => {
-        expect(res.body.length).toBe(0);
-      });
+
+    comment = await Comment.findOne({ text: "Comment to delete" });
+    expect(comment).toBeNull();
+    done();
+  });
+
+  test("Try to get comments for a nonexistent story", async done => {
+    await request(app).get("/comments/testtesttesttesttesttest")
+      .expect(400);
     done();
   });
 });
@@ -326,6 +372,14 @@ describe("Test admin features", () => {
     done();
   });
 
+  test("Try to add new question with missing title", async done => {
+    await request(app).post("/questions/admin")
+      .set("Authorization", token)
+      .send({ order: 1, isTopLevel: true })
+      .expect(400);
+    done();
+  });
+
   test("Add new child question to an existing question", async done => {
     const parentQuestion = await Question.findOne();
 
@@ -359,9 +413,9 @@ describe("Test admin features", () => {
       .set("Authorization", token)
       .send({ title: "Updated question" })
       .expect(200)
-      .then(res => {
-        expect(res.body[0].title).toBe("Updated question");
-      })
+
+    const updatedQuestion = await Question.findById(question._id);
+    expect(updatedQuestion.title).toBe("Updated question");
     done();
   });
 
@@ -389,6 +443,15 @@ describe("Test AWS functions", () => {
       .then(res => {
         expect(res.body.success).toBeTruthy();
       });
+    done();
+  })
+});
+
+describe("Test authentication", () => {
+  test("Make request with invalid token", async done => {
+    await request(app).get("/users/current")
+      .set("Authorization", "12345")
+      .expect(403);
     done();
   })
 })
