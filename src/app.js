@@ -43,7 +43,7 @@ app.use("/login", loginRouter);
 app.post("/sign_s3", auths3);
 
 mongoose.connect(
-  "mongodb://localhost:27017/",
+  mongodbURI,
   {
     dbName: process.env.DB_NAME,
     useNewUrlParser: true,
