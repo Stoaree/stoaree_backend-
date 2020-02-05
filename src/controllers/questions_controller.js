@@ -64,7 +64,7 @@ async function addMasterQuestion(req, res) {
 }
 
 async function editMasterQuestion(req, res) {
-  const { title, order, isTopLevel, isYesOrNo } = req.body;
+  const { title, order, isYesOrNo } = req.body;
   let question = await Question.findById(req.params.question_id);
 
   question.title = title || question.title;

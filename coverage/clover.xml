@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1580878054359" clover="3.2.0">
-  <project timestamp="1580878054359" name="All files">
-    <metrics statements="435" coveredstatements="307" conditionals="80" coveredconditionals="42" methods="44" coveredmethods="26" elements="559" coveredelements="375" complexity="0" loc="435" ncloc="435" packages="4" files="21" classes="21"/>
+<coverage generated="1580882851260" clover="3.2.0">
+  <project timestamp="1580882851260" name="All files">
+    <metrics statements="435" coveredstatements="379" conditionals="80" coveredconditionals="54" methods="44" coveredmethods="36" elements="559" coveredelements="469" complexity="0" loc="435" ncloc="435" packages="4" files="21" classes="21"/>
     <package name="src">
       <metrics statements="48" coveredstatements="46" conditionals="6" coveredconditionals="3" methods="3" coveredmethods="2"/>
       <file name="app.js" path="/mnt/d/users/doctortess/documents/coder-academy/fast-track/assignments/StoareeBackend/src/app.js">
@@ -57,9 +57,9 @@
       </file>
     </package>
     <package name="src.controllers">
-      <metrics statements="292" coveredstatements="171" conditionals="74" coveredconditionals="39" methods="37" coveredmethods="23"/>
+      <metrics statements="292" coveredstatements="243" conditionals="74" coveredconditionals="51" methods="37" coveredmethods="33"/>
       <file name="authentication_controller.js" path="/mnt/d/users/doctortess/documents/coder-academy/fast-track/assignments/StoareeBackend/src/controllers/authentication_controller.js">
-        <metrics statements="49" coveredstatements="38" conditionals="27" coveredconditionals="16" methods="7" coveredmethods="6"/>
+        <metrics statements="49" coveredstatements="41" conditionals="27" coveredconditionals="17" methods="7" coveredmethods="7"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -67,70 +67,70 @@
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
-        <line num="11" count="10" type="stmt"/>
-        <line num="12" count="10" type="stmt"/>
+        <line num="11" count="17" type="stmt"/>
+        <line num="12" count="17" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
-        <line num="17" count="10" type="cond" truecount="2" falsecount="1"/>
-        <line num="21" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="17" count="17" type="cond" truecount="2" falsecount="1"/>
+        <line num="21" count="17" type="cond" truecount="1" falsecount="1"/>
         <line num="23" count="0" type="stmt"/>
-        <line num="26" count="10" type="cond" truecount="1" falsecount="1"/>
-        <line num="28" count="10" type="stmt"/>
-        <line num="29" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="26" count="17" type="cond" truecount="1" falsecount="1"/>
+        <line num="28" count="17" type="stmt"/>
+        <line num="29" count="17" type="cond" truecount="1" falsecount="1"/>
         <line num="30" count="0" type="stmt"/>
-        <line num="33" count="10" type="stmt"/>
-        <line num="34" count="10" type="stmt"/>
-        <line num="35" count="10" type="stmt"/>
-        <line num="36" count="10" type="stmt"/>
+        <line num="33" count="17" type="stmt"/>
+        <line num="34" count="17" type="stmt"/>
+        <line num="35" count="17" type="stmt"/>
+        <line num="36" count="17" type="stmt"/>
         <line num="42" count="0" type="stmt"/>
-        <line num="47" count="6" type="stmt"/>
-        <line num="49" count="6" type="cond" truecount="4" falsecount="0"/>
-        <line num="51" count="5" type="stmt"/>
-        <line num="53" count="5" type="cond" truecount="2" falsecount="0"/>
-        <line num="54" count="4" type="stmt"/>
-        <line num="55" count="4" type="cond" truecount="1" falsecount="1"/>
-        <line num="56" count="4" type="stmt"/>
-        <line num="61" count="4" type="stmt"/>
+        <line num="47" count="7" type="stmt"/>
+        <line num="49" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="51" count="6" type="stmt"/>
+        <line num="53" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="54" count="5" type="stmt"/>
+        <line num="55" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="56" count="5" type="stmt"/>
+        <line num="61" count="5" type="stmt"/>
         <line num="70" count="0" type="stmt"/>
         <line num="75" count="1" type="stmt"/>
         <line num="79" count="1" type="stmt"/>
-        <line num="86" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="86" count="5" type="cond" truecount="2" falsecount="0"/>
         <line num="87" count="2" type="stmt"/>
-        <line num="88" count="0" type="stmt"/>
-        <line num="90" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="91" count="2" type="stmt"/>
-        <line num="92" count="2" type="stmt"/>
+        <line num="88" count="2" type="stmt"/>
+        <line num="90" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="91" count="3" type="stmt"/>
+        <line num="92" count="3" type="stmt"/>
         <line num="94" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="95" count="0" type="stmt"/>
-        <line num="98" count="2" type="stmt"/>
-        <line num="99" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="100" count="2" type="stmt"/>
+        <line num="98" count="5" type="stmt"/>
+        <line num="99" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="100" count="5" type="stmt"/>
         <line num="103" count="0" type="stmt"/>
-        <line num="108" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="109" count="0" type="stmt"/>
+        <line num="108" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="109" count="6" type="stmt"/>
         <line num="112" count="0" type="stmt"/>
         <line num="116" count="1" type="stmt"/>
       </file>
       <file name="aws_controller.js" path="/mnt/d/users/doctortess/documents/coder-academy/fast-track/assignments/StoareeBackend/src/controllers/aws_controller.js">
-        <metrics statements="16" coveredstatements="5" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="16" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="10" count="1" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="25" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
         <line num="37" count="1" type="stmt"/>
       </file>
       <file name="comments_controller.js" path="/mnt/d/users/doctortess/documents/coder-academy/fast-track/assignments/StoareeBackend/src/controllers/comments_controller.js">
-        <metrics statements="40" coveredstatements="17" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="2"/>
+        <metrics statements="40" coveredstatements="36" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -149,26 +149,26 @@
         <line num="29" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
         <line num="33" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
-        <line num="42" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="45" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="42" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
         <line num="49" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="57" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="60" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="62" count="0" type="stmt"/>
-        <line num="63" count="0" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="57" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
         <line num="66" count="0" type="stmt"/>
         <line num="69" count="1" type="stmt"/>
       </file>
@@ -200,53 +200,53 @@
         <line num="56" count="1" type="stmt"/>
       </file>
       <file name="questions_controller.js" path="/mnt/d/users/doctortess/documents/coder-academy/fast-track/assignments/StoareeBackend/src/controllers/questions_controller.js">
-        <metrics statements="48" coveredstatements="4" conditionals="8" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <metrics statements="48" coveredstatements="44" conditionals="8" coveredconditionals="7" methods="5" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
-        <line num="52" count="0" type="stmt"/>
-        <line num="53" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="54" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="60" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="43" count="2" type="stmt"/>
+        <line num="51" count="2" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="53" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="60" count="2" type="stmt"/>
+        <line num="61" count="2" type="stmt"/>
         <line num="63" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="68" count="0" type="stmt"/>
-        <line num="70" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="71" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="72" count="0" type="stmt"/>
-        <line num="74" count="0" type="stmt"/>
-        <line num="75" count="0" type="stmt"/>
-        <line num="76" count="0" type="stmt"/>
-        <line num="77" count="0" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="70" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="71" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="74" count="1" type="stmt"/>
+        <line num="75" count="1" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
         <line num="79" count="0" type="stmt"/>
-        <line num="83" count="0" type="stmt"/>
-        <line num="84" count="0" type="stmt"/>
-        <line num="86" count="0" type="stmt"/>
-        <line num="87" count="0" type="stmt"/>
-        <line num="88" count="0" type="stmt"/>
-        <line num="89" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="90" count="0" type="stmt"/>
-        <line num="91" count="0" type="stmt"/>
-        <line num="92" count="0" type="stmt"/>
-        <line num="94" count="0" type="stmt"/>
-        <line num="95" count="0" type="stmt"/>
+        <line num="83" count="2" type="stmt"/>
+        <line num="84" count="2" type="stmt"/>
+        <line num="86" count="2" type="stmt"/>
+        <line num="87" count="2" type="stmt"/>
+        <line num="88" count="2" type="stmt"/>
+        <line num="89" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="92" count="1" type="stmt"/>
+        <line num="94" count="2" type="stmt"/>
+        <line num="95" count="2" type="stmt"/>
         <line num="97" count="0" type="stmt"/>
-        <line num="104" count="0" type="stmt"/>
-        <line num="106" count="0" type="stmt"/>
-        <line num="107" count="0" type="stmt"/>
-        <line num="112" count="0" type="stmt"/>
-        <line num="113" count="0" type="stmt"/>
-        <line num="114" count="0" type="stmt"/>
-        <line num="115" count="0" type="stmt"/>
-        <line num="116" count="0" type="stmt"/>
+        <line num="104" count="1" type="stmt"/>
+        <line num="106" count="1" type="stmt"/>
+        <line num="107" count="1" type="stmt"/>
+        <line num="112" count="1" type="stmt"/>
+        <line num="113" count="1" type="stmt"/>
+        <line num="114" count="1" type="stmt"/>
+        <line num="115" count="1" type="stmt"/>
+        <line num="116" count="1" type="stmt"/>
         <line num="118" count="0" type="stmt"/>
         <line num="121" count="1" type="stmt"/>
       </file>
@@ -302,7 +302,7 @@
         <line num="99" count="1" type="stmt"/>
       </file>
       <file name="user_controller.js" path="/mnt/d/users/doctortess/documents/coder-academy/fast-track/assignments/StoareeBackend/src/controllers/user_controller.js">
-        <metrics statements="67" coveredstatements="48" conditionals="19" coveredconditionals="15" methods="8" coveredmethods="6"/>
+        <metrics statements="67" coveredstatements="49" conditionals="19" coveredconditionals="16" methods="8" coveredmethods="6"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -321,11 +321,11 @@
         <line num="41" count="3" type="stmt"/>
         <line num="56" count="2" type="stmt"/>
         <line num="57" count="2" type="stmt"/>
-        <line num="58" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="58" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="59" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="60" count="1" type="stmt"/>
         <line num="61" count="1" type="stmt"/>
-        <line num="64" count="0" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
         <line num="69" count="1" type="stmt"/>
         <line num="70" count="1" type="stmt"/>
         <line num="71" count="1" type="cond" truecount="2" falsecount="0"/>

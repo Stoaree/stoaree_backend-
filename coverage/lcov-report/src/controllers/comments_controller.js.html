@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.5% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/40</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>36/40</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
-                <span class="quiet">Functions</span>
+                <span class="quiet">Branches</span>
                 <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.5% </span>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>4/4</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">90% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/40</span>
+                <span class='fraction'>36/40</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -161,33 +161,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -228,34 +228,34 @@ async function addComment(req, res) {
   catch (err) { <span class="cstat-no" title="statement not covered" >sendError(res, err); </span>}
 }
 &nbsp;
-async function <span class="fstat-no" title="function not covered" >editComment(</span>req, res) {
-  const { story_id, comment_id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-  const { text } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+async function editComment(req, res) {
+  const { story_id, comment_id } = req.params;
+  const { text } = req.body;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const story = <span class="cstat-no" title="statement not covered" >await Story.findById(story_id);</span>
-<span class="cstat-no" title="statement not covered" >    if (story.comments.includes(comment_id)) {</span>
-      let comment = <span class="cstat-no" title="statement not covered" >await Comment.findById(comment_id);</span>
-<span class="cstat-no" title="statement not covered" >      comment.text = text;</span>
-<span class="cstat-no" title="statement not covered" >      await comment.save();</span>
-<span class="cstat-no" title="statement not covered" >      res.json(comment);</span>
+  try {
+    const story = await Story.findById(story_id);
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (story.comments.includes(comment_id)) {
+      let comment = await Comment.findById(comment_id);
+      comment.text = text;
+      await comment.save();
+      res.json(comment);
     }
   }
   catch (err) { <span class="cstat-no" title="statement not covered" >sendError(res, err); </span>}
 }
 &nbsp;
-async function <span class="fstat-no" title="function not covered" >deleteComment(</span>req, res) {
-  const { story_id, comment_id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
+async function deleteComment(req, res) {
+  const { story_id, comment_id } = req.params;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const story = <span class="cstat-no" title="statement not covered" >await Story.findById(story_id);</span>
-<span class="cstat-no" title="statement not covered" >    if (story.comments.includes(comment_id)) {</span>
-      const comment = <span class="cstat-no" title="statement not covered" >await Comment.findById(comment_id);</span>
-<span class="cstat-no" title="statement not covered" >      await comment.remove();</span>
-      const index = <span class="cstat-no" title="statement not covered" >story.comments.indexOf(comment_id);</span>
-<span class="cstat-no" title="statement not covered" >      story.comments.splice(index, 1);</span>
-<span class="cstat-no" title="statement not covered" >      await story.save();</span>
-<span class="cstat-no" title="statement not covered" >      res.json(story.comments);</span>
+  try {
+    const story = await Story.findById(story_id);
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (story.comments.includes(comment_id)) {
+      const comment = await Comment.findById(comment_id);
+      await comment.remove();
+      const index = story.comments.indexOf(comment_id);
+      story.comments.splice(index, 1);
+      await story.save();
+      res.json(story.comments);
     }
   }
   catch (err) { <span class="cstat-no" title="statement not covered" >sendError(res, err); </span>}
@@ -268,7 +268,7 @@ module.exports = { getComments, addComment, editComment, deleteComment };</pre><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Feb 05 2020 15:47:34 GMT+1100 (Australian Eastern Daylight Time)
+                at Wed Feb 05 2020 17:07:31 GMT+1100 (Australian Eastern Daylight Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
