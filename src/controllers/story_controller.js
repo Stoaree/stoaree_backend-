@@ -65,6 +65,7 @@ async function createStory(req, res) {
 async function editStory(req, res) {
   const { title, description, interviewee, tags, imageURL, isPublic } = req.body;
   const story = await Story.findById(req.params.story_id);
+
   story.title = title || story.title;
   story.description = description;
   story.tags = tags;

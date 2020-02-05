@@ -55,9 +55,14 @@ async function getUserProfile(req, res) {
   // get user profile data
   const { user_id } = req.params;
   const user = await User.findById(user_id);
-  const isCurrentUser = req.user && (user_id === req.user._id);
-  const userDisplayData = await getUserProfileStuff(user, isCurrentUser);
-  res.json(userDisplayData);
+  if (user) {
+    const isCurrentUser = req.user && (user_id === req.user._id);
+    const userDisplayData = await getUserProfileStuff(user, isCurrentUser);
+    res.json(userDisplayData);
+  }
+  else {
+    res.status(400).end();
+  }
 }
 
 async function updateProfile(req, res) {
