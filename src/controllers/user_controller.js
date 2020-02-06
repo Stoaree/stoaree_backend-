@@ -55,9 +55,14 @@ async function getUserProfile(req, res) {
   // get user profile data
   const { user_id } = req.params;
   const user = await User.findById(user_id);
-  const isCurrentUser = req.user && (user_id === req.user._id);
-  const userDisplayData = await getUserProfileStuff(user, isCurrentUser);
-  res.json(userDisplayData);
+  if (user) {
+    const isCurrentUser = req.user && (user_id === req.user._id);
+    const userDisplayData = await getUserProfileStuff(user, isCurrentUser);
+    res.json(userDisplayData);
+  }
+  else {
+    res.status(400).end();
+  }
 }
 
 async function updateProfile(req, res) {
@@ -69,31 +74,12 @@ async function updateProfile(req, res) {
   user.displayName = displayName || user.displayName;
   user.location = location;
   user.avatarURL = avatarURL || user.avatarURL;
-  user.bookmarks = [];
   try {
     user.save();
     const userDisplayData = await getUserProfileStuff(user);
     res.status(200).json(userDisplayData);
   }
   catch (err) { sendError(res, err); }
-}
-
-async function updateAvatarURL(req, res) {
-  let user = req.user;
-
-  const { avatarURL } = req.body;
-  user.avatarURL = avatarURL;
-
-  try {
-    await user.save();
-    const userDisplayData = {
-      _id: user._id,
-      avatarURL
-    }
-    res.json(userDisplayData);
-  } catch (err) {
-    sendError(res, err);
-  }
 }
 
 async function getCurrentUser(req, res) {
@@ -121,28 +107,4 @@ async function addLike(req, res) {
   catch (err) { sendError(res, err); }
 }
 
-// for testing purposes only
-
-async function registerAdmin(req, res) {
-  // create admin user
-  const { email, password, firstName, lastName, displayName } = req.body;
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const admin = new User({
-    email,
-    firstName,
-    lastName,
-    password: hashedPassword,
-    displayName,
-    isAdmin: true
-  });
-
-  try {
-    const savedUser = await admin.save();
-    res.json(savedUser);
-  }
-  catch (err) { sendError(res, err); }
-}
-
-module.exports = { register, getUserProfile, updateProfile, registerAdmin, updateAvatarURL, getCurrentUser, addLike };
+module.exports = { register, getUserProfile, updateProfile, getCurrentUser, addLike };

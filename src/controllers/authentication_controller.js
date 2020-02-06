@@ -66,13 +66,11 @@ async function login(req, res, next) {
         });
       }
       else {
-        // res.status(403).send("No user found");
-        next(createError(403, "No user found"));
+        next(createError(403, "Incorrect email or password"));
       }
-
     }
     else {
-      next(createError(403, "Incorrect email or password"));
+      next(createError(403, "No user found"));
     }
   }
   else {

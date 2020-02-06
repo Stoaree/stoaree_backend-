@@ -1,4 +1,3 @@
-const Story = require("../models/Story");
 const User = require("../models/User");
 const Comment = require("../models/Comment");
 const Question = require("../models/Question");
