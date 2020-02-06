@@ -10,11 +10,6 @@ router.post("/admin", checkToken, isAdmin, addMasterQuestion);
 router.put("/admin/:question_id", checkToken, isAdmin, editMasterQuestion);
 router.delete("/admin/:question_id", checkToken, isAdmin, deleteMasterQuestion);
 
-router.get("/admin", getMasterQuestions);
-router.post("/admin", addMasterQuestion);
-router.put("/admin/:question_id", editMasterQuestion);
-router.delete("/admin/:question_id", deleteMasterQuestion);
-
 // for users
 router.post("/:story_id", checkToken, checkPermissions, answerQuestion);
 

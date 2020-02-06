@@ -5,14 +5,14 @@ const { sendError } = require("./functions");
 
 // admin functions
 
-function orderQuestions(questionArray) {
-  questionArray = questionArray.sort((q1, q2) => {
-    return q1.order - q2.order;
-  }).map((question, index) => {
-    question.order = index + 1;
-    return question;
-  });
-}
+// function orderQuestions(questionArray) {
+//   questionArray = questionArray.sort((q1, q2) => {
+//     return q1.order - q2.order;
+//   }).map((question, index) => {
+//     question.order = index + 1;
+//     return question;
+//   });
+// }
 
 // async function getSubQuestions(questionArray) {
 //   if (questionArray) {
@@ -64,16 +64,17 @@ async function addMasterQuestion(req, res) {
 }
 
 async function editMasterQuestion(req, res) {
-  const { title, order, isTopLevel, isYesOrNo } = req.body;
+  const { title, order, isYesOrNo } = req.body;
   let question = await Question.findById(req.params.question_id);
+
   question.title = title || question.title;
   question.order = order || question.order;
-  question.isTopLevel = isTopLevel || question.isTopLevel;
-  question.isYesOrNo = isYesOrNo || question.isYesOrNo;
+  question.isYesOrNo = isYesOrNo;
 
   try {
     await question.save();
-    res.json(question);
+    let questions = await Question.find({ isMaster: true }).sort({ order: 1 });
+    res.status(200).json(questions);
   }
   catch (err) { sendError(res, err); }
 }
@@ -90,21 +91,13 @@ async function deleteMasterQuestion(req, res) {
       parentQuestion.subQuestions.splice(index, 1);
       await parentQuestion.save();
     }
-    res.status(200).end();
+    let questions = await Question.find({ isMaster: true }).sort({ order: 1 });
+    res.status(200).json(questions);
   }
   catch (err) { sendError(res, err); }
 }
 
 // user functions
-
-// async function getQuestions(req, res) {
-//   // get list of all questions for a story
-//   try {
-//     const story = await Story.findById(req.params.story_id);
-//     res.json(story.questions);
-//   }
-//   catch (err) { sendError(res, err); }
-// }
 
 async function answerQuestion(req, res) {
   // add a question with a response to a story

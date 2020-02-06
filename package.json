@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/bin/www"
+    "start": "node ./src/bin/www",
+    "test": "jest --detectOpenHandles --collectCoverage --forceExit"
   },
   "dependencies": {
     "aws-sdk": "^2.607.0",
@@ -19,5 +20,16 @@
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "~1.9.1",
     "yarn": "^1.21.1"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
   }
 }

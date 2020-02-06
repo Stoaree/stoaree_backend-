@@ -7,7 +7,7 @@ const SEARCH_LIMIT = 10;
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
-  let stories = await Story.find().sort("-createdAt").limit(SEARCH_LIMIT);
+  let stories = await Story.find({ isPublic: true }).sort("-createdAt").limit(SEARCH_LIMIT);
   stories = stories.map(story => getStoryStuff(story));
   const storiesForDisplay = await Promise.all(stories);
   res.json(storiesForDisplay);
