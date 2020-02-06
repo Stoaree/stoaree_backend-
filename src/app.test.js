@@ -10,9 +10,11 @@ const Question = require("../src/models/Question");
 const validEmail = "newuser@test.com";
 const validPassword = "password"
 
+// MAKE SURE TESTS ARE RUN ON A SEPARATE DATABASE
+
 beforeAll(() => {
   mongoose.connect(
-    "mongodb://localhost:27017/", { dbName: process.env.DB_NAME }, () => {
+    process.env.DB_URI, { dbName: process.env.DB_NAME }, () => {
       mongoose.connection.db.dropDatabase();
     }
   );
