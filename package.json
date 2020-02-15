@@ -19,7 +19,7 @@
     "mongoose": "^5.8.9",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "~1.9.1",
-    "yarn": "^1.21.1"
+    "yarn": "^1.22.0"
   },
   "devDependencies": {
     "jest": "^25.1.0",
